@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Mensajes{% endblock %}
+{% block heading %}Mensajes{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+  <p class="muted" style="margin:0">{{ messages|length }} mensaje(s).</p>
+</div>
+
+<div class="panel">
+  <div class="table-wrap">
+    {% if messages %}
+      <table class="data">
+        <thead>
+          <tr>
+            <th>De</th>
+            <th>Asunto</th>
+            <th>Recibido</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for message in messages %}
+            <tr>
+              <td>
+                <strong>{{ message.name }}</strong>
+                <div class="muted" style="font-size:.8rem">{{ message.email }}</div>
+              </td>
+              <td>{{ message.subject or '(sin asunto)' }}</td>
+              <td class="muted">{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+              <td>{% if message.is_read %}<span class="pill pill--off">Leido</span>{% else %}<span class="pill pill--accent">Nuevo</span>{% endif %}</td>
+              <td>
+                <div class="row-actions">
+                  <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.message_detail', message_id=message.id) }}">Abrir</a>
+                  <form method="post" action="{{ url_for('admin.message_delete', message_id=message.id) }}" data-confirm="¿Eliminar este mensaje?">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn--danger btn--sm" type="submit">Eliminar</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">No hay mensajes.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

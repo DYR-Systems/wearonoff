@@ -1,0 +1,12 @@
+{% extends "public/base.html" %}
+{% block title %}Acceso denegado{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container text-center" style="max-width:620px">
+    <p class="eyebrow">Error 403</p>
+    <h1>No tienes permisos para ver esto</h1>
+    <p class="lead">Inicia sesion con una cuenta autorizada.</p>
+    <p><a class="btn btn--dark" href="{{ url_for('auth.login') }}">Iniciar sesion</a></p>
+  </div>
+</section>
+{% endblock %}

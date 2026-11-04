@@ -1,0 +1,13 @@
+line-length = 100
+target-version = "py311"
+
+exclude = [
+    "venv",
+    "migrations",
+]
+
+[lint]
+select = ["E", "F", "I", "B", "UP", "C4", "SIM"]
+
+[lint.per-file-ignores]
+"tests/*" = ["SIM117"]

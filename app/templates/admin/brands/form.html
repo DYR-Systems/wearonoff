@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field, checkbox, image_field, gallery_item %}
+
+{% block title %}{{ 'Editar marca' if brand else 'Nueva marca' }}{% endblock %}
+{% block heading %}{{ 'Editar marca' if brand else 'Nueva marca' }}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="panel">
+  <div class="panel__body">
+    {{ form.hidden_tag() }}
+
+    <div class="section-title">Informacion general</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.name) }}
+      {{ field(form.slug) }}
+      {{ field(form.domain) }}
+      {{ field(form.tagline) }}
+    </div>
+    <div class="form-grid">
+      {{ field(form.short_description) }}
+      {{ field(form.description) }}
+    </div>
+
+    <div class="section-title">Imagenes</div>
+    <div class="form-grid form-grid--2">
+      {{ image_field(form.logo, brand.logo_url if brand else None) }}
+      {{ image_field(form.cover, brand.cover_url if brand else None) }}
+    </div>
+    <div class="field">
+      {{ form.gallery.label }}
+      {{ form.gallery() }}
+      <p class="field__hint">Puedes seleccionar varias imagenes a la vez.</p>
+      {% for error in form.gallery.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+    </div>
+    {% if brand and brand.gallery %}
+      <div class="gallery-grid">
+        {% for image in brand.gallery %}
+          {{ gallery_item(image, url_for('admin.brand_gallery_delete', brand_id=brand.id, media_id=image.id)) }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="section-title">Enlaces y color</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.website_url) }}
+      {{ field(form.store_url) }}
+      {{ field(form.primary_color) }}
+      {{ field(form.sort_order) }}
+    </div>
+    {{ checkbox(form.is_store) }}
+
+    <div class="section-title">Publicacion</div>
+    {{ checkbox(form.is_published) }}
+    {{ checkbox(form.is_featured) }}
+
+    <div class="section-title">SEO</div>
+    <div class="form-grid">
+      {{ field(form.meta_title) }}
+      {{ field(form.meta_description) }}
+    </div>
+  </div>
+  <div class="panel__header" style="border-top:1px solid var(--a-line);border-bottom:0">
+    <a class="btn btn--ghost" href="{{ url_for('admin.brands') }}">Cancelar</a>
+    {{ form.submit(class="btn btn--primary") }}
+  </div>
+</form>
+{% endblock %}

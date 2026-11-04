@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field, checkbox %}
+
+{% block title %}{{ 'Editar usuario' if user else 'Nuevo usuario' }}{% endblock %}
+{% block heading %}{{ 'Editar usuario' if user else 'Nuevo usuario' }}{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:620px">
+  <div class="panel__body">
+    <form method="post" class="form-grid">
+      {{ form.hidden_tag() }}
+      {{ field(form.name) }}
+      {{ field(form.email) }}
+      {{ field(form.password) }}
+      {{ checkbox(form.is_superadmin) }}
+      {{ checkbox(form.is_enabled) }}
+      <div style="display:flex;gap:.6rem">
+        <a class="btn btn--ghost" href="{{ url_for('admin.users') }}">Cancelar</a>
+        {{ form.submit(class="btn btn--primary") }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

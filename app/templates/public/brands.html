@@ -1,0 +1,28 @@
+{% extends "public/base.html" %}
+{% from "public/_macros.html" import brand_card %}
+
+{% block title %}Marcas — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Nuestras marcas</p>
+      <h1>Un portafolio de marcas especializadas</h1>
+      <p class="lead" style="color:rgba(255,255,255,.78)">Explora cada una de las marcas que creamos y administramos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if brands %}
+      <div class="grid grid--3">
+        {% for brand in brands %}{{ brand_card(brand) }}{% endfor %}
+      </div>
+    {% else %}
+      <p class="lead">Todavia no hay marcas publicadas.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

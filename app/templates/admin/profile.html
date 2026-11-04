@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field %}
+
+{% block title %}Perfil{% endblock %}
+{% block heading %}Mi perfil{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:620px">
+  <div class="panel__body">
+    <form method="post" class="form-grid">
+      {{ form.hidden_tag() }}
+      {{ field(form.name) }}
+      {{ field(form.email) }}
+
+      <div class="section-title">Cambiar contrasena</div>
+      {{ field(form.current_password) }}
+      <div class="form-grid form-grid--2">
+        {{ field(form.new_password) }}
+        {{ field(form.confirm_password) }}
+      </div>
+      {{ form.submit(class="btn btn--primary") }}
+    </form>
+  </div>
+</div>
+{% endblock %}

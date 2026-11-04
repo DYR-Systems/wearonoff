@@ -1,0 +1,9 @@
+{
+  "include": ["app", "tests", "run.py"],
+  "exclude": ["venv", "migrations"],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "reportMissingImports": "warning",
+  "venvPath": ".",
+  "venv": "venv"
+}

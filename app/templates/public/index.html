@@ -1,0 +1,104 @@
+{% extends "public/base.html" %}
+{% from "public/_macros.html" import brand_card, project_card %}
+
+{% block title %}{{ site.site_name if site else 'ON & OFF' }}{% if site and site.tagline %} — {{ site.tagline }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero__media">
+    {% if site and site.hero_url %}
+      <img src="{{ site.hero_url }}" alt="">
+    {% endif %}
+  </div>
+  <div class="container">
+    <div class="hero__inner">
+      <p class="eyebrow">{{ site.site_name if site else 'ON & OFF' }}</p>
+      <h1 class="hero__title">{{ site.hero_title if site and site.hero_title else (site.tagline if site and site.tagline else 'Creamos marcas que dejan huella') }}</h1>
+      {% if site and site.hero_subtitle %}
+        <p class="hero__subtitle">{{ site.hero_subtitle }}</p>
+      {% endif %}
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="{{ url_for('public.brands') }}">Descubre nuestras marcas</a>
+        {% if site and site.hero_cta_label and site.hero_cta_url %}
+          <a class="btn btn--light" href="{{ site.hero_cta_url }}">{{ site.hero_cta_label }}</a>
+        {% else %}
+          <a class="btn btn--ghost" href="{{ url_for('public.contact') }}">Trabajemos juntos</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if featured_brands %}
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">Nuestro ecosistema</p>
+      <h2>Marcas que construimos</h2>
+      <p class="lead">Cada marca nace con una identidad propia y un objetivo claro.</p>
+    </div>
+    <div class="grid grid--3">
+      {% for brand in featured_brands %}
+        {{ brand_card(brand) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if site and (site.about_body or site.mission) %}
+<section class="section section--soft">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">Quienes somos</p>
+      <h2>{{ site.about_title or 'Una empresa, varias marcas' }}</h2>
+      <div class="prose">{{ (site.about_body or '')|safe }}</div>
+      {% if site.mission or site.vision %}
+        <ul class="feature-list">
+          {% if site.mission %}<li>{{ site.mission }}</li>{% endif %}
+          {% if site.vision %}<li>{{ site.vision }}</li>{% endif %}
+        </ul>
+      {% endif %}
+      <p style="margin-top:1.8rem"><a class="btn btn--dark" href="{{ url_for('public.about') }}">Conoce mas</a></p>
+    </div>
+    <div class="split__media">
+      {% if site.hero_url %}
+        <img src="{{ site.hero_url }}" alt="{{ site.site_name }}">
+      {% else %}
+        <div class="card__placeholder" style="font-size:4rem">{{ (site.site_name or 'ON')[:2] }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if featured_projects %}
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Portafolio</p>
+      <h2>Trabajo reciente</h2>
+      <p class="lead">Proyectos que reflejan como trabajamos cada marca.</p>
+    </div>
+    <div class="grid grid--3">
+      {% for project in featured_projects %}
+        {{ project_card(project) }}
+      {% endfor %}
+    </div>
+    <p style="margin-top:2.2rem"><a class="btn btn--ghost" href="{{ url_for('public.projects') }}">Ver todo el portafolio</a></p>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>¿Tienes una idea de marca?</h2>
+        <p style="margin:0;opacity:.8">Conversemos y construyamos juntos la siguiente.</p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('public.contact') }}">Hablemos</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

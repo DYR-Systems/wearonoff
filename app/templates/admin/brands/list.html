@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% block title %}Marcas{% endblock %}
+{% block heading %}Marcas{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+  <p class="muted" style="margin:0">{{ brands|length }} marca(s) registradas.</p>
+  <a class="btn btn--primary" href="{{ url_for('admin.brand_create') }}">+ Nueva marca</a>
+</div>
+
+<div class="panel">
+  <div class="table-wrap">
+    {% if brands %}
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Marca</th>
+            <th>Dominio</th>
+            <th>Estado</th>
+            <th>Destacada</th>
+            <th>Orden</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for brand in brands %}
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:.8rem">
+                  {% if brand.logo_url %}
+                    <img class="thumb" src="{{ brand.logo_url }}" alt="{{ brand.name }}">
+                  {% elif brand.cover_url %}
+                    <img class="thumb" src="{{ brand.cover_url }}" alt="{{ brand.name }}">
+                  {% else %}
+                    <div class="thumb" style="display:grid;place-items:center;font-weight:700">{{ brand.initials }}</div>
+                  {% endif %}
+                  <div>
+                    <strong>{{ brand.name }}</strong>
+                    <div class="muted" style="font-size:.8rem">/marcas/{{ brand.slug }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>{{ brand.domain or '—' }}</td>
+              <td><span class="pill {{ 'pill--ok' if brand.is_published else 'pill--off' }}">{{ 'Publicada' if brand.is_published else 'Borrador' }}</span></td>
+              <td>{% if brand.is_featured %}<span class="pill pill--accent">Si</span>{% else %}—{% endif %}</td>
+              <td>{{ brand.sort_order }}</td>
+              <td>
+                <div class="row-actions">
+                  <a class="btn btn--ghost btn--sm" href="{{ brand.url }}" target="_blank" rel="noopener">Ver</a>
+                  <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.brand_edit', brand_id=brand.id) }}">Editar</a>
+                  <form method="post" action="{{ url_for('admin.brand_delete', brand_id=brand.id) }}" data-confirm="¿Eliminar la marca {{ brand.name }} y sus imagenes?">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn--danger btn--sm" type="submit">Eliminar</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">No hay marcas. Crea la primera para empezar.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

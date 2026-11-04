@@ -1,0 +1,46 @@
+{% macro brand_card(brand, extra_class='') %}
+<article class="card {{ extra_class }}">
+  <a class="card__media" href="{{ brand.url }}" aria-label="{{ brand.name }}">
+    {% if brand.cover_url %}
+      <img src="{{ brand.cover_url }}" alt="{{ brand.name }}" loading="lazy">
+    {% else %}
+      <div class="card__placeholder" {% if brand.primary_color %}style="background:linear-gradient(135deg, {{ brand.primary_color }}, rgba(0,0,0,.35))"{% endif %}>
+        {{ brand.initials }}
+      </div>
+    {% endif %}
+  </a>
+  <div class="card__body">
+    {% if brand.logo_url %}
+      <img class="card__logo" src="{{ brand.logo_url }}" alt="{{ brand.name }}">
+    {% endif %}
+    <h3><a href="{{ brand.url }}">{{ brand.name }}</a></h3>
+    {% if brand.tagline %}<p class="muted" style="margin:0">{{ brand.tagline }}</p>{% endif %}
+    {% if brand.short_description %}<p style="margin:0">{{ brand.short_description }}</p>{% endif %}
+    <div class="pill-row">
+      {% if brand.is_store %}<span class="tag">Tienda</span>{% endif %}
+      {% if brand.domain %}<span class="tag">{{ brand.domain }}</span>{% endif %}
+    </div>
+    <a class="card__link" href="{{ brand.display_url }}" {% if brand.is_external %}target="_blank" rel="noopener"{% endif %}>
+      {{ 'Ir a la tienda' if brand.is_external else 'Conocer la marca' }} &rarr;
+    </a>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro project_card(project) %}
+<article class="card">
+  <a class="card__media" href="{{ project.url }}" aria-label="{{ project.title }}">
+    {% if project.cover_url %}
+      <img src="{{ project.cover_url }}" alt="{{ project.title }}" loading="lazy">
+    {% else %}
+      <div class="card__placeholder">{{ project.title[:1]|upper }}</div>
+    {% endif %}
+  </a>
+  <div class="card__body">
+    {% if project.category %}<span class="card__meta">{{ project.category }}{% if project.year %} &middot; {{ project.year }}{% endif %}</span>{% endif %}
+    <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
+    {% if project.summary %}<p class="muted" style="margin:0">{{ project.summary }}</p>{% endif %}
+    <a class="card__link" href="{{ project.url }}">Ver proyecto &rarr;</a>
+  </div>
+</article>
+{% endmacro %}

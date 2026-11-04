@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block heading %}Usuarios{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+  <p class="muted" style="margin:0">{{ users|length }} usuario(s).</p>
+  <a class="btn btn--primary" href="{{ url_for('admin.user_create') }}">+ Nuevo usuario</a>
+</div>
+
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Ultimo acceso</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td><strong>{{ user.name or '—' }}</strong></td>
+            <td>{{ user.email }}</td>
+            <td>{% if user.is_superadmin %}<span class="pill pill--accent">Superadmin</span>{% else %}<span class="pill">Editor</span>{% endif %}</td>
+            <td><span class="pill {{ 'pill--ok' if user.is_enabled else 'pill--off' }}">{{ 'Activo' if user.is_enabled else 'Inactivo' }}</span></td>
+            <td class="muted">{{ user.last_login_at.strftime('%Y-%m-%d %H:%M') if user.last_login_at else '—' }}</td>
+            <td>
+              <div class="row-actions">
+                <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}">Editar</a>
+                {% if user.id != current_user.id %}
+                  <form method="post" action="{{ url_for('admin.user_delete', user_id=user.id) }}" data-confirm="¿Eliminar a {{ user.email }}?">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn--danger btn--sm" type="submit">Eliminar</button>
+                  </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

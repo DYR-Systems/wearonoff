@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field, image_field %}
+
+{% block title %}Ajustes{% endblock %}
+{% block heading %}Ajustes del sitio{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="panel">
+  <div class="panel__body">
+    {{ form.hidden_tag() }}
+
+    <div class="section-title">Identidad</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.site_name) }}
+      {{ field(form.tagline) }}
+    </div>
+    {{ field(form.meta_description) }}
+    <div class="form-grid form-grid--2">
+      {{ image_field(form.logo, site.logo_url) }}
+      {{ image_field(form.favicon, site.favicon_url) }}
+    </div>
+
+    <div class="section-title">Hero (portada)</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.hero_title) }}
+      {{ image_field(form.hero, site.hero_url) }}
+    </div>
+    {{ field(form.hero_subtitle) }}
+    <div class="form-grid form-grid--2">
+      {{ field(form.hero_cta_label) }}
+      {{ field(form.hero_cta_url) }}
+    </div>
+
+    <div class="section-title">Nosotros</div>
+    {{ field(form.about_title) }}
+    {{ field(form.about_body) }}
+    <div class="form-grid form-grid--2">
+      {{ field(form.mission) }}
+      {{ field(form.vision) }}
+    </div>
+
+    <div class="section-title">Contacto</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.contact_email) }}
+      {{ field(form.contact_phone) }}
+      {{ field(form.contact_whatsapp) }}
+      {{ field(form.address) }}
+    </div>
+
+    <div class="section-title">Redes sociales</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.facebook_url) }}
+      {{ field(form.instagram_url) }}
+      {{ field(form.linkedin_url) }}
+      {{ field(form.tiktok_url) }}
+      {{ field(form.youtube_url) }}
+    </div>
+
+    <div class="section-title">Tema</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.primary_color) }}
+      {{ field(form.accent_color) }}
+    </div>
+    {{ field(form.footer_text) }}
+  </div>
+  <div class="panel__header" style="border-top:1px solid var(--a-line);border-bottom:0;justify-content:flex-end">
+    {{ form.submit(class="btn btn--primary") }}
+  </div>
+</form>
+{% endblock %}

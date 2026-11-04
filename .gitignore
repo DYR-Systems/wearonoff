@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtualenv
+venv/
+.venv/
+
+# Environment / secrets
+.env
+
+# Runtime data
+instance/*.db
+instance/*.sqlite3
+instance/uploads/*
+!instance/uploads/.gitkeep
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Local logs
+*.log

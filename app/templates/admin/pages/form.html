@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field, checkbox, image_field, gallery_item %}
+
+{% block title %}{{ 'Editar pagina' if page else 'Nueva pagina' }}{% endblock %}
+{% block heading %}{{ 'Editar pagina' if page else 'Nueva pagina' }}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="panel">
+  <div class="panel__body">
+    {{ form.hidden_tag() }}
+
+    <div class="section-title">Contenido</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.title) }}
+      {{ field(form.slug) }}
+    </div>
+    {{ field(form.body) }}
+
+    <div class="section-title">Imagenes</div>
+    {{ image_field(form.cover, page.cover_url if page else None) }}
+    <div class="field">
+      {{ form.gallery.label }}
+      {{ form.gallery() }}
+      <p class="field__hint">Puedes seleccionar varias imagenes a la vez.</p>
+      {% for error in form.gallery.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+    </div>
+    {% if page and page.gallery %}
+      <div class="gallery-grid">
+        {% for image in page.gallery %}
+          {{ gallery_item(image, url_for('admin.page_gallery_delete', page_id=page.id, media_id=image.id)) }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="section-title">Publicacion</div>
+    <div class="form-grid form-grid--2">
+      {{ field(form.sort_order) }}
+    </div>
+    {{ checkbox(form.is_published) }}
+    {{ checkbox(form.show_in_nav) }}
+
+    <div class="section-title">SEO</div>
+    <div class="form-grid">
+      {{ field(form.meta_title) }}
+      {{ field(form.meta_description) }}
+    </div>
+  </div>
+  <div class="panel__header" style="border-top:1px solid var(--a-line);border-bottom:0">
+    <a class="btn btn--ghost" href="{{ url_for('admin.pages') }}">Cancelar</a>
+    {{ form.submit(class="btn btn--primary") }}
+  </div>
+</form>
+{% endblock %}

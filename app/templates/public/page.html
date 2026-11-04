@@ -1,0 +1,32 @@
+{% extends "public/base.html" %}
+
+{% block title %}{{ page.meta_title or page.title }} — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+{% block meta_description %}{{ page.meta_description or '' }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <h1>{{ page.title }}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:820px">
+    {% if page.cover_url %}
+      <div class="split__media" style="margin-bottom:2rem"><img src="{{ page.cover_url }}" alt="{{ page.title }}"></div>
+    {% endif %}
+    <div class="prose">{{ (page.body or '')|safe }}</div>
+    {% if page.gallery %}
+      <div class="gallery">
+        {% for image in page.gallery %}
+          <a href="{{ image.url }}" target="_blank" rel="noopener">
+            <img src="{{ image.thumbnail_url }}" alt="{{ image.alt_text or page.title }}" loading="lazy">
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

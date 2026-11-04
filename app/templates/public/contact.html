@@ -1,0 +1,82 @@
+{% extends "public/base.html" %}
+
+{% block title %}Contacto — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Contacto</p>
+      <h1>Hablemos</h1>
+      <p class="lead" style="color:rgba(255,255,255,.78)">Cuentanos tu proyecto y te responderemos lo antes posible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail">
+    <div>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="alert alert--{{ category if category in ['success','danger','warning'] else 'success' }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      <form class="form" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form__row form__row--2">
+          <div class="field">
+            {{ form.name.label }}
+            {{ form.name() }}
+            {% for error in form.name.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+          </div>
+          <div class="field">
+            {{ form.email.label }}
+            {{ form.email() }}
+            {% for error in form.email.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+          </div>
+        </div>
+        <div class="form__row form__row--2">
+          <div class="field">
+            {{ form.phone.label }}
+            {{ form.phone() }}
+            {% for error in form.phone.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+          </div>
+          <div class="field">
+            {{ form.company.label }}
+            {{ form.company() }}
+            {% for error in form.company.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+          </div>
+        </div>
+        <div class="field">
+          {{ form.subject.label }}
+          {{ form.subject() }}
+          {% for error in form.subject.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+        </div>
+        <div class="field">
+          {{ form.message.label }}
+          {{ form.message() }}
+          {% for error in form.message.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+        </div>
+        <div>{{ form.submit(class="btn btn--primary") }}</div>
+      </form>
+    </div>
+
+    <aside class="detail__aside">
+      <dl>
+        {% if site.contact_email %}<div><dt>Email</dt><dd><a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></dd></div>{% endif %}
+        {% if site.contact_phone %}<div><dt>Telefono</dt><dd>{{ site.contact_phone }}</dd></div>{% endif %}
+        {% if site.contact_whatsapp %}<div><dt>WhatsApp</dt><dd>{{ site.contact_whatsapp }}</dd></div>{% endif %}
+        {% if site.address %}<div><dt>Direccion</dt><dd>{{ site.address }}</dd></div>{% endif %}
+      </dl>
+      {% if site.social_links %}
+        <div class="pill-row" style="margin-top:1.2rem">
+          {% for label, link in site.social_links %}
+            <a class="tag" href="{{ link }}" target="_blank" rel="noopener">{{ label }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+{% endblock %}

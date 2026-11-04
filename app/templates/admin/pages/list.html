@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %}
+{% block title %}Paginas{% endblock %}
+{% block heading %}Paginas{% endblock %}
+
+{% block content %}
+<div class="page-actions">
+  <p class="muted" style="margin:0">{{ pages|length }} pagina(s).</p>
+  <a class="btn btn--primary" href="{{ url_for('admin.page_create') }}">+ Nueva pagina</a>
+</div>
+
+<div class="panel">
+  <div class="table-wrap">
+    {% if pages %}
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>URL</th>
+            <th>En menu</th>
+            <th>Estado</th>
+            <th>Orden</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for page in pages %}
+            <tr>
+              <td><strong>{{ page.title }}</strong></td>
+              <td class="muted">/p/{{ page.slug }}</td>
+              <td>{% if page.show_in_nav %}<span class="pill pill--accent">Si</span>{% else %}—{% endif %}</td>
+              <td><span class="pill {{ 'pill--ok' if page.is_published else 'pill--off' }}">{{ 'Publicada' if page.is_published else 'Borrador' }}</span></td>
+              <td>{{ page.sort_order }}</td>
+              <td>
+                <div class="row-actions">
+                  <a class="btn btn--ghost btn--sm" href="{{ page.url }}" target="_blank" rel="noopener">Ver</a>
+                  <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.page_edit', page_id=page.id) }}">Editar</a>
+                  <form method="post" action="{{ url_for('admin.page_delete', page_id=page.id) }}" data-confirm="¿Eliminar la pagina {{ page.title }}?">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn--danger btn--sm" type="submit">Eliminar</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">No hay paginas adicionales.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

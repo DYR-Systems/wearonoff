@@ -1,0 +1,81 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="stat-grid">
+  <div class="stat"><div class="stat__value">{{ stats.brands }}</div><div class="stat__label">Marcas</div></div>
+  <div class="stat"><div class="stat__value">{{ stats.projects }}</div><div class="stat__label">Proyectos</div></div>
+  <div class="stat"><div class="stat__value">{{ stats.pages }}</div><div class="stat__label">Paginas</div></div>
+  <div class="stat"><div class="stat__value">{{ stats.media }}</div><div class="stat__label">Archivos</div></div>
+  <div class="stat"><div class="stat__value">{{ stats.unread_messages }}</div><div class="stat__label">Mensajes sin leer</div></div>
+</div>
+
+<div class="page-actions">
+  <h2 style="margin:0;font-size:1.05rem">Accesos rapidos</h2>
+</div>
+<div class="page-actions" style="justify-content:flex-start">
+  <a class="btn btn--primary" href="{{ url_for('admin.brand_create') }}">+ Nueva marca</a>
+  <a class="btn btn--ghost" href="{{ url_for('admin.project_create') }}">+ Nuevo proyecto</a>
+  <a class="btn btn--ghost" href="{{ url_for('admin.media') }}">Subir imagenes</a>
+  <a class="btn btn--ghost" href="{{ url_for('admin.settings') }}">Ajustes del sitio</a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:1.8rem" class="dash-cols">
+  <div class="panel">
+    <div class="panel__header">
+      <h2>Mensajes recientes</h2>
+      <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.messages') }}">Ver todos</a>
+    </div>
+    <div class="table-wrap">
+      {% if recent_messages %}
+        <table class="data">
+          <tbody>
+            {% for message in recent_messages %}
+              <tr>
+                <td>
+                  <a href="{{ url_for('admin.message_detail', message_id=message.id) }}"><strong>{{ message.name }}</strong></a>
+                  <div class="muted" style="font-size:.8rem">{{ message.email }}</div>
+                </td>
+                <td style="text-align:right">
+                  {% if not message.is_read %}<span class="pill pill--accent">Nuevo</span>{% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="empty">Sin mensajes todavia.</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__header">
+      <h2>Proyectos recientes</h2>
+      <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.projects') }}">Ver todos</a>
+    </div>
+    <div class="table-wrap">
+      {% if recent_projects %}
+        <table class="data">
+          <tbody>
+            {% for project in recent_projects %}
+              <tr>
+                <td>
+                  <a href="{{ url_for('admin.project_edit', project_id=project.id) }}"><strong>{{ project.title }}</strong></a>
+                  <div class="muted" style="font-size:.8rem">{{ project.brand.name if project.brand else 'Sin marca' }}</div>
+                </td>
+                <td style="text-align:right">
+                  <span class="pill {{ 'pill--ok' if project.is_published else 'pill--off' }}">{{ 'Publicado' if project.is_published else 'Borrador' }}</span>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="empty">Sin proyectos todavia.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

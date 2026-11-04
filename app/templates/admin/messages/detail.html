@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% block title %}Mensaje{% endblock %}
+{% block heading %}Mensaje de {{ message.name }}{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:780px">
+  <div class="panel__header">
+    <div>
+      <strong>{{ message.subject or '(sin asunto)' }}</strong>
+      <div class="muted" style="font-size:.8rem">{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+    </div>
+    <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.messages') }}">Volver</a>
+  </div>
+  <div class="panel__body">
+    <div class="form-grid form-grid--2" style="margin-bottom:1rem">
+      <div><div class="muted" style="font-size:.75rem">Nombre</div><strong>{{ message.name }}</strong></div>
+      <div><div class="muted" style="font-size:.75rem">Email</div><a href="mailto:{{ message.email }}">{{ message.email }}</a></div>
+      {% if message.phone %}<div><div class="muted" style="font-size:.75rem">Telefono</div>{{ message.phone }}</div>{% endif %}
+      {% if message.company %}<div><div class="muted" style="font-size:.75rem">Empresa</div>{{ message.company }}</div>{% endif %}
+    </div>
+    <div class="section-title">Mensaje</div>
+    <p style="white-space:pre-wrap;margin:0">{{ message.message }}</p>
+  </div>
+  <div class="panel__header" style="border-top:1px solid var(--a-line);border-bottom:0;justify-content:flex-end">
+    <a class="btn btn--primary" href="mailto:{{ message.email }}?subject=Re: {{ (message.subject or '')|urlencode }}">Responder por email</a>
+    <form method="post" action="{{ url_for('admin.message_delete', message_id=message.id) }}" data-confirm="¿Eliminar este mensaje?">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn--danger" type="submit">Eliminar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

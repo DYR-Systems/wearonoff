@@ -1,0 +1,80 @@
+{% extends "admin/base.html" %}
+{% block title %}Media{% endblock %}
+{% block heading %}Biblioteca de medios{% endblock %}
+
+{% block content %}
+<div class="panel" style="margin-bottom:1.6rem">
+  <div class="panel__header"><h2>Subir imagenes</h2></div>
+  <div class="panel__body">
+    <form method="post" action="{{ url_for('admin.media_upload') }}" enctype="multipart/form-data" class="form-grid">
+      {{ form.hidden_tag() }}
+      <div class="field">
+        {{ form.files.label }}
+        {{ form.files(multiple=true, accept="image/*") }}
+        <p class="field__hint">Formatos permitidos: JPG, PNG, GIF, WEBP, AVIF, SVG. Se optimizan automaticamente.</p>
+      </div>
+      <div class="form-grid form-grid--2">
+        <div class="field">{{ form.alt_text.label }}{{ form.alt_text() }}</div>
+        <div class="field">{{ form.caption.label }}{{ form.caption() }}</div>
+      </div>
+      {{ form.submit(class="btn btn--primary") }}
+    </form>
+  </div>
+</div>
+
+<div class="page-actions">
+  <form class="search-bar" method="get" action="{{ url_for('admin.media') }}">
+    <input type="text" name="q" value="{{ search }}" placeholder="Buscar por nombre...">
+    <button class="btn btn--ghost" type="submit">Buscar</button>
+  </form>
+  <p class="muted" style="margin:0">{{ pagination.total }} archivo(s)</p>
+</div>
+
+{% if pagination.items %}
+  <div class="media-grid">
+    {% for item in pagination.items %}
+      <div class="media-card">
+        <div class="media-card__thumb">
+          <a href="{{ item.url }}" target="_blank" rel="noopener">
+            <img src="{{ item.thumbnail_url }}" alt="{{ item.alt_text or item.original_filename }}">
+          </a>
+        </div>
+        <div class="media-card__body">
+          <div class="name" title="{{ item.original_filename }}">{{ item.original_filename or item.filename }}</div>
+          <div class="pill-row" style="margin-top:.3rem">
+            {% if item.brand %}<span class="pill">{{ item.brand.name }}</span>{% endif %}
+            {% if item.project %}<span class="pill">{{ item.project.title }}</span>{% endif %}
+          </div>
+          <input type="text" readonly value="{{ item.url }}" style="width:100%;margin-top:.45rem;padding:.3rem .45rem;border:1px solid var(--a-line);border-radius:6px;font-size:.7rem">
+          <div class="media-card__actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-copy="{{ item.url }}">Copiar URL</button>
+            <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.media_edit', media_id=item.id) }}">Editar</a>
+            <form method="post" action="{{ url_for('admin.media_delete', media_id=item.id) }}" data-confirm="¿Eliminar este archivo?">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn--danger btn--sm" type="submit">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if pagination.pages > 1 %}
+    <div class="pagination">
+      {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}
+          {% if page_num == pagination.page %}
+            <span class="is-current">{{ page_num }}</span>
+          {% else %}
+            <a href="{{ url_for('admin.media', page=page_num, q=search) }}">{{ page_num }}</a>
+          {% endif %}
+        {% else %}
+          <span>…</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% else %}
+  <div class="panel"><div class="empty">No hay archivos. Sube el primero.</div></div>
+{% endif %}
+{% endblock %}

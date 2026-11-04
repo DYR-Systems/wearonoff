@@ -1,0 +1,61 @@
+{% extends "public/base.html" %}
+
+{% block title %}{{ site.about_title or 'Nosotros' }} — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Nosotros</p>
+      <h1>{{ site.about_title or 'Quienes somos' }}</h1>
+      {% if site.tagline %}<p class="lead" style="color:rgba(255,255,255,.78)">{{ site.tagline }}</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div class="prose">{{ (site.about_body or '<p>Configura este contenido desde el panel de administracion.</p>')|safe }}</div>
+    <div class="split__media">
+      {% if site.hero_url %}
+        <img src="{{ site.hero_url }}" alt="{{ site.site_name }}">
+      {% else %}
+        <div class="card__placeholder" style="font-size:4rem">{{ (site.site_name or 'ON')[:2] }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if site.mission or site.vision %}
+<section class="section section--soft">
+  <div class="container">
+    <div class="info-grid">
+      {% if site.mission %}
+        <div class="info-card">
+          <p class="eyebrow">Mision</p>
+          <p style="margin:0">{{ site.mission }}</p>
+        </div>
+      {% endif %}
+      {% if site.vision %}
+        <div class="info-card">
+          <p class="eyebrow">Vision</p>
+          <p style="margin:0">{{ site.vision }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>¿Quieres ser parte?</h2>
+        <p style="margin:0;opacity:.8">Escríbenos y descubre como podemos colaborar.</p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('public.contact') }}">Contacto</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

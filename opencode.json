@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": {
+    "ruff": {
+      "command": ["venv/bin/ruff", "server"],
+      "extensions": [".py", ".pyi"]
+    },
+    "pyright": {
+      "command": ["venv/bin/pyright-langserver", "--stdio"]
+    }
+  }
+}

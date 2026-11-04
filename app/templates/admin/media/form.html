@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import field %}
+
+{% block title %}Editar archivo{% endblock %}
+{% block heading %}Editar archivo{% endblock %}
+
+{% block content %}
+<div class="panel" style="max-width:760px">
+  <div class="panel__body">
+    <div class="current-image" style="margin-bottom:1.2rem">
+      <img src="{{ item.thumbnail_url }}" alt="{{ item.alt_text or item.original_filename }}" style="width:140px;height:140px">
+      <div>
+        <div><strong>{{ item.original_filename or item.filename }}</strong></div>
+        <div class="muted">{{ item.width }}x{{ item.height }} · {{ (item.size / 1024)|round(1) }} KB · {{ item.mime_type }}</div>
+        <div class="muted" style="word-break:break-all">{{ item.url }}</div>
+      </div>
+    </div>
+
+    <form method="post" class="form-grid">
+      {{ form.hidden_tag() }}
+      {{ field(form.alt_text) }}
+      {{ field(form.caption) }}
+      <div style="display:flex;gap:.6rem">
+        <a class="btn btn--ghost" href="{{ url_for('admin.media') }}">Volver</a>
+        {{ form.submit(class="btn btn--primary") }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

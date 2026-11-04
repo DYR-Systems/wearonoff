@@ -1,0 +1,37 @@
+{% extends "public/base.html" %}
+{% from "public/_macros.html" import project_card %}
+
+{% block title %}Portafolio — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="eyebrow">Portafolio</p>
+      <h1>Proyectos y casos de exito</h1>
+      <p class="lead" style="color:rgba(255,255,255,.78)">Una seleccion del trabajo que hemos desarrollado para nuestras marcas y clientes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if brands %}
+      <div class="pill-row" style="margin-bottom:2rem">
+        <a class="tag" href="{{ url_for('public.projects') }}" {% if not current_brand %}style="border-color:var(--accent);color:var(--ink)"{% endif %}>Todas</a>
+        {% for brand in brands %}
+          <a class="tag" href="{{ url_for('public.projects', marca=brand.slug) }}" {% if current_brand and current_brand.id == brand.id %}style="border-color:var(--accent);color:var(--ink)"{% endif %}>{{ brand.name }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if projects %}
+      <div class="grid grid--3">
+        {% for project in projects %}{{ project_card(project) }}{% endfor %}
+      </div>
+    {% else %}
+      <p class="lead">Todavia no hay proyectos publicados.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

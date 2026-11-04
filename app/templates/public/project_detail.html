@@ -1,0 +1,67 @@
+{% extends "public/base.html" %}
+{% from "public/_macros.html" import project_card %}
+
+{% block title %}{{ project.meta_title or project.title }} — {{ site.site_name if site else 'ON & OFF' }}{% endblock %}
+{% block meta_description %}{{ project.meta_description or project.summary }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__inner">
+      <p class="breadcrumb"><a href="{{ url_for('public.projects') }}">Portafolio</a> / {{ project.title }}</p>
+      {% if project.category %}<p class="eyebrow">{{ project.category }}{% if project.year %} &middot; {{ project.year }}{% endif %}</p>{% endif %}
+      <h1>{{ project.title }}</h1>
+      {% if project.summary %}<p class="lead" style="color:rgba(255,255,255,.78)">{{ project.summary }}</p>{% endif %}
+      {% if project.project_url %}
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="{{ project.project_url }}" target="_blank" rel="noopener">Ver proyecto</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if project.cover_url %}
+<section style="margin-top:-2.5rem">
+  <div class="container">
+    <div class="split__media"><img src="{{ project.cover_url }}" alt="{{ project.title }}"></div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container detail">
+    <div>
+      <div class="prose">{{ (project.description or '')|safe }}</div>
+      {% if project.gallery %}
+        <div class="gallery">
+          {% for image in project.gallery %}
+            <a href="{{ image.url }}" target="_blank" rel="noopener">
+              <img src="{{ image.thumbnail_url }}" alt="{{ image.alt_text or project.title }}" loading="lazy">
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <aside class="detail__aside">
+      <dl>
+        {% if project.client %}<div><dt>Cliente</dt><dd>{{ project.client }}</dd></div>{% endif %}
+        {% if project.brand %}<div><dt>Marca</dt><dd><a href="{{ project.brand.url }}">{{ project.brand.name }}</a></dd></div>{% endif %}
+        {% if project.category %}<div><dt>Categoria</dt><dd>{{ project.category }}</dd></div>{% endif %}
+        {% if project.year %}<div><dt>Ano</dt><dd>{{ project.year }}</dd></div>{% endif %}
+      </dl>
+    </aside>
+  </div>
+</section>
+
+{% if related %}
+<section class="section section--soft">
+  <div class="container">
+    <div class="section-head"><h2>Mas proyectos</h2></div>
+    <div class="grid grid--3">
+      {% for item in related %}{{ project_card(item) }}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

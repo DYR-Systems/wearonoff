@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Scrubs — Uniformes médicos con estilo{% endblock %}</title>
+  <meta name="description" content="Uniformes médicos con estilo. Comodidad, tecnología de tela y diseño para quienes trabajan sin descanso.">
+  {% if site and site.favicon_url %}<link rel="icon" href="{{ site.favicon_url }}">{% endif %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/figs.css') }}">
+</head>
+<body class="figs">
+
+  <div class="figs-announce">
+    <span class="figs-announce__long">Envío gratis en pedidos superiores a ₡37.000<span class="figs-announce__sep">·</span></span>
+    Devoluciones gratuitas<span class="figs-announce__sep">·</span><a href="#colores">Compra ahora</a>
+  </div>
+
+  <header class="figs-header">
+    <div class="figs-container figs-header__inner">
+      <button class="figs-icon-btn figs-menu-toggle" type="button" data-figs-open aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <nav class="figs-header__nav" aria-label="Principal">
+        <a href="#mujeres">Mujeres</a>
+        <a href="#hombres">Hombres</a>
+        <a href="#colores">Colores</a>
+        <a href="#telas">Telas</a>
+        <a href="#equipo">Equipos</a>
+      </nav>
+
+      <a class="figs-logo" href="{{ url_for('public.index') }}" aria-label="{{ brand.name if brand else 'Scrubs' }}">
+        {% if brand and brand.logo_url %}
+          <img src="{{ brand.logo_url }}" alt="{{ brand.name }}">
+        {% else %}
+          {{ (brand.name if brand else 'Scrubs')|upper }}
+        {% endif %}
+      </a>
+
+      <div class="figs-header__actions">
+        <button class="figs-icon-btn" type="button" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        <a class="figs-icon-btn" href="{{ url_for('auth.login') }}" aria-label="Mi cuenta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        </a>
+        <a class="figs-icon-btn figs-bag" href="#productos" aria-label="Bolsa de compras">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="figs-bag__count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="figs-drawer" data-figs-drawer>
+    <div class="figs-drawer__top">
+      <span class="figs-logo">{{ (brand.name if brand else 'Scrubs')|upper }}</span>
+      <button class="figs-icon-btn" type="button" data-figs-close aria-label="Cerrar menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="figs-drawer__nav" aria-label="Móvil">
+      <a href="#mujeres">Mujeres</a>
+      <a href="#hombres">Hombres</a>
+      <a href="#colores">Colores</a>
+      <a href="#telas">Telas</a>
+      <a href="#equipo">Equipos</a>
+      <a href="#productos">Comprar</a>
+    </nav>
+  </div>
+
+  <main>
+    <section class="figs-hero">
+      <div class="figs-hero__media">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1920&q=80" alt="Profesional de la salud con uniforme médico">
+      </div>
+      <div class="figs-hero__content">
+        <p class="figs-hero__eyebrow">Nueva colección</p>
+        <h1>Nunca cambies</h1>
+        <p class="figs-hero__subtitle">Uniformes que trabajan tan duro como tú. Comodidad, resistencia y diseño para cada turno.</p>
+        <div class="figs-hero__actions">
+          <a class="figs-btn figs-btn--light" href="#mujeres">Comprar para mujeres</a>
+          <a class="figs-btn figs-btn--ghost-light" href="#hombres">Comprar para hombres</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="figs-section" id="colores">
+      <div class="figs-container">
+        <div class="figs-section-head">
+          <h2>Compra por color</h2>
+          <p>Crea tu uniforme definitivo con los colores que nunca fallan.</p>
+        </div>
+        <div class="figs-colors">
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#111111"></span>Negro</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#1d2a44"></span>Azul marino</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#1f4fa0"></span>Azul real</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#3f4448"></span>Gris carbón</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#5c6b4a"></span>Musgo</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#6d2233"></span>Borgoña</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#b58a8a"></span>Malva</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#9fc4d8"></span>Azul cielo</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#2f9bb3"></span>Azul caribe</a>
+          <a class="figs-color" href="#productos"><span class="figs-swatch" style="--c:#f2f0ea"></span>Blanco óptico</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="figs-section figs-section--soft" id="mujeres">
+      <div class="figs-container">
+        <div class="figs-section-head">
+          <h2>Por categoría</h2>
+          <p>Todo lo que necesitas para armar tu look de guardia.</p>
+        </div>
+        <div class="figs-categories">
+          <a class="figs-category" href="#productos">
+            <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=80" alt="Casacas de uniforme médico" loading="lazy">
+            <span class="figs-category__label">Casacas</span>
+          </a>
+          <a class="figs-category" href="#productos">
+            <img src="https://images.unsplash.com/photo-1622902046580-2b47f47f5471?auto=format&fit=crop&w=800&q=80" alt="Pantalones de uniforme médico" loading="lazy">
+            <span class="figs-category__label">Pantalones</span>
+          </a>
+          <a class="figs-category" href="#productos">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80" alt="Conjuntos de uniforme médico" loading="lazy">
+            <span class="figs-category__label">Conjuntos</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="figs-section" id="productos">
+      <div class="figs-container">
+        <div class="figs-section-head">
+          <h2>Los más vendidos</h2>
+          <p>Los favoritos de quienes no se detienen.</p>
+        </div>
+        <div class="figs-products">
+          <article class="figs-product">
+            <div class="figs-product__media">
+              <span class="figs-badge">Nuevo</span>
+              <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=800&q=80" alt="Cascada de uniforme médico" loading="lazy">
+            </div>
+            <div class="figs-product__body">
+              <h3 class="figs-product__name">Cascada de uniforme médico</h3>
+              <p class="figs-product__price">₡42.000</p>
+              <div class="figs-product__colors">
+                <span class="figs-product__dot" style="--c:#111111"></span>
+                <span class="figs-product__dot" style="--c:#1d2a44"></span>
+                <span class="figs-product__dot" style="--c:#5c6b4a"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="figs-product">
+            <div class="figs-product__media">
+              <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80" alt="Pantalón de uniforme médico" loading="lazy">
+            </div>
+            <div class="figs-product__body">
+              <h3 class="figs-product__name">Pantalón de uniforme médico</h3>
+              <p class="figs-product__price">₡38.000</p>
+              <div class="figs-product__colors">
+                <span class="figs-product__dot" style="--c:#111111"></span>
+                <span class="figs-product__dot" style="--c:#3f4448"></span>
+                <span class="figs-product__dot" style="--c:#b58a8a"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="figs-product">
+            <div class="figs-product__media">
+              <span class="figs-badge figs-badge--light">Más vendido</span>
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80" alt="Conjunto de uniforme médico" loading="lazy">
+            </div>
+            <div class="figs-product__body">
+              <h3 class="figs-product__name">Conjunto de uniforme médico</h3>
+              <p class="figs-product__price">₡72.000</p>
+              <div class="figs-product__colors">
+                <span class="figs-product__dot" style="--c:#1d2a44"></span>
+                <span class="figs-product__dot" style="--c:#6d2233"></span>
+                <span class="figs-product__dot" style="--c:#2f9bb3"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="figs-product">
+            <div class="figs-product__media">
+              <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=800&q=80" alt="Chaqueta de uniforme médico" loading="lazy">
+            </div>
+            <div class="figs-product__body">
+              <h3 class="figs-product__name">Chaqueta de uniforme médico</h3>
+              <p class="figs-product__price">₡45.000</p>
+              <div class="figs-product__colors">
+                <span class="figs-product__dot" style="--c:#3f4448"></span>
+                <span class="figs-product__dot" style="--c:#1f4fa0"></span>
+                <span class="figs-product__dot" style="--c:#111111"></span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="figs-products__more">
+          <a class="figs-btn figs-btn--outline" href="{{ (brand.store_url if brand else '') or '#' }}"{% if brand and brand.store_url %} target="_blank" rel="noopener"{% endif %}>Ver toda la colección</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="figs-fabric" id="telas">
+      <div class="figs-fabric__media">
+        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80" alt="Tecnología de la tela de uniforme médico" loading="lazy">
+      </div>
+      <div class="figs-fabric__body">
+        <p class="figs-eyebrow">Tecnología de la tela</p>
+        <h2>FIONx™</h2>
+        <p>Suave al tacto, resistente al uso diario y diseñada para moverse contigo. Nuestras telas respiran, estiran y duran turno tras turno.</p>
+        <ul class="figs-fabric__list">
+          <li>Anti-encogimiento y anti-arrugas</li>
+          <li>Cuatro direcciones de elasticidad</li>
+          <li>Protección contra líquidos</li>
+        </ul>
+        <a class="figs-btn" href="#productos">Conoce la tela</a>
+      </div>
+    </section>
+
+    <section class="figs-team" id="equipo">
+      <div class="figs-team__media">
+        <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1920&q=80" alt="Equipo de salud" loading="lazy">
+      </div>
+      <div class="figs-team__content">
+        <h2>Ponle Scrubs a todo tu equipo</h2>
+        <p>Los equipos extraordinarios merecen uniformes extraordinarios. Facilitamos los pedidos grupales para clínicas y hospitales.</p>
+        <a class="figs-btn figs-btn--light" href="{{ url_for('public.contact') }}">Comenzar</a>
+      </div>
+    </section>
+
+    <section class="figs-social">
+      <div class="figs-container">
+        <p class="figs-social__handle">Humanos extraordinarios · #wearscrubs</p>
+        <div class="figs-social__links">
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">YouTube</a>
+          <a href="#">Pinterest</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="figs-footer">
+    <div class="figs-container">
+      <div class="figs-footer__grid">
+        <div>
+          <h4>Obtén ayuda</h4>
+          <ul>
+            <li><a href="{{ url_for('public.contact') }}">Centro de ayuda</a></li>
+            <li><a href="#">Envío y entregas</a></li>
+            <li><a href="#">Devoluciones y cambios</a></li>
+            <li><a href="{{ url_for('public.contact') }}">Contáctanos</a></li>
+            {% if site and site.contact_phone %}<li><span>{{ site.contact_phone }}</span></li>{% endif %}
+          </ul>
+        </div>
+        <div>
+          <h4>Nuestra empresa</h4>
+          <ul>
+            <li><a href="{{ url_for('public.about') }}">Nuestra historia</a></li>
+            <li><a href="{{ url_for('public.projects') }}">Portafolio</a></li>
+            <li><a href="{{ url_for('public.about') }}">Impacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Guías</h4>
+          <ul>
+            <li><a href="#">Guía de tallas</a></li>
+            <li><a href="#">Cuidado de la prenda</a></li>
+            <li><a href="#telas">Tecnología de la tela</a></li>
+            <li><a href="#">Personaliza tu uniforme</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Más información</h4>
+          <ul>
+            <li><a href="#equipo">Pedidos grupales</a></li>
+            <li><a href="#">Descuento para estudiantes</a></li>
+            <li><a href="{{ url_for('public.contact') }}">Preguntas frecuentes</a></li>
+            <li><a href="{{ url_for('public.contact') }}">Trabaja con nosotros</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="figs-footer__bottom">
+        <span>&copy; {{ current_year }} {{ (brand.name if brand else 'Scrubs')|upper }}. Todos los derechos reservados.</span>
+        <div class="figs-footer__legal">
+          <a href="#">Términos de uso</a>
+          <a href="#">Política de privacidad</a>
+          <span class="figs-footer__country">Costa Rica | es</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/figs.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% macro field(f, wrapper_class='') %}
+<div class="field {{ wrapper_class }}">
+  {{ f.label }}
+  {{ f() }}
+  {% if f.description %}<p class="field__hint">{{ f.description }}</p>{% endif %}
+  {% for error in f.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro checkbox(f) %}
+<label class="checkbox">
+  {{ f() }}
+  <span>{{ f.label.text }}</span>
+</label>
+{% for error in f.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+{% endmacro %}
+
+{% macro image_field(f, current_url, note='') %}
+<div class="field">
+  {{ f.label }}
+  {{ f() }}
+  {% if note %}<p class="field__hint">{{ note }}</p>{% endif %}
+  {% if current_url %}
+    <div class="current-image">
+      <img src="{{ current_url }}" alt="Imagen actual">
+      <span>Imagen actual</span>
+    </div>
+  {% endif %}
+  {% for error in f.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro gallery_item(image, delete_url) %}
+<figure>
+  <img src="{{ image.thumbnail_url }}" alt="{{ image.alt_text or '' }}">
+  <form method="post" action="{{ delete_url }}" data-confirm="¿Eliminar esta imagen?">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="icon-btn" type="submit" title="Eliminar">&times;</button>
+  </form>
+</figure>
+{% endmacro %}
