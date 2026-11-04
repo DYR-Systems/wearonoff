@@ -43,7 +43,7 @@ Las imágenes subidas se guardan en `public/images/`.
 - URL: `/cms`
 - Configuración: `public/cms/config.yml`
 - Repo: `DYR-Systems/wearonoff`
-- OAuth: `https://dyr-neomed-oauth-backend.onrender.com`
+- OAuth: `https://dyr-wearonoff-oauth-backend.onrender.com`
 
 Cada cambio del admin crea un commit en la rama `main`. Render reconstruye el sitio automáticamente.
 

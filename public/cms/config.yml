@@ -2,7 +2,7 @@ backend:
   name: github
   repo: DYR-Systems/wearonoff
   branch: main
-  base_url: https://dyr-neomed-oauth-backend.onrender.com
+  base_url: https://dyr-wearonoff-oauth-backend.onrender.com
   auth_endpoint: auth
 
 local_backend: true
