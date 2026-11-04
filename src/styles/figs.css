@@ -868,8 +868,8 @@ body.figs {
   }
   .figs-hero--split {
     grid-template-columns: 1fr;
-    min-height: clamp(540px, 82vh, 820px);
-    background: #222;
+    min-height: clamp(520px, 76vh, 680px);
+    background: linear-gradient(180deg, #c4c4c4 0%, #d6d5d3 100%);
     color: #fff;
     text-align: center;
   }
@@ -918,6 +918,10 @@ body.figs {
       rgba(0, 0, 0, 0.3) 45%,
       rgba(0, 0, 0, 0.55) 100%
     );
+  }
+  .figs-hero--split .figs-hero__media .figs-hero__fg {
+    object-fit: contain;
+    object-position: center;
   }
   .figs-footer__grid {
     grid-template-columns: repeat(2, 1fr);
