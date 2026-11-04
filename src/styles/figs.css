@@ -421,13 +421,24 @@ body.figs {
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
-  width: 84px;
-  font-size: 0.64rem;
+  width: 92px;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-align: center;
   color: var(--figs-ink);
+}
+
+.figs-color__label {
+  display: block;
+}
+
+.figs-color__code {
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--figs-muted);
+  white-space: nowrap;
 }
 
 .figs-swatch {
@@ -553,6 +564,12 @@ body.figs {
 .figs-product__price {
   margin: 0.25rem 0 0;
   font-size: 0.85rem;
+  color: var(--figs-muted);
+}
+
+.figs-product__sizes {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
   color: var(--figs-muted);
 }
 
@@ -960,15 +977,11 @@ body.figs {
     gap: 1.4rem 0.9rem;
   }
   .figs-colors {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 0.8rem;
-    gap: 1.2rem;
-    scrollbar-width: none;
-  }
-  .figs-colors::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+    padding-bottom: 0;
+    gap: 1.2rem 1.4rem;
   }
   .figs-color {
     flex: none;

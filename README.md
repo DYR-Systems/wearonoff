@@ -1,6 +1,6 @@
 # WearOnOff — Sitio estático
 
-Sitio estático de **Scrubs (WearOnOff)** construido con [Astro](https://astro.build/) y administrado con [Decap CMS](https://decapcms.org/).
+Sitio estático de **WearOnOff** construido con [Astro](https://astro.build/) y administrado con [Decap CMS](https://decapcms.org/).
 
 ## Desarrollo
 

@@ -81,6 +81,7 @@ collections:
     sortable_fields: ["orden", "nombre"]
     fields:
       - { label: "Nombre", name: "nombre", widget: "string" }
+      - { label: "Código", name: "codigo", widget: "string", required: false, hint: "Ejemplo: G2" }
       - { label: "Color", name: "hex", widget: "color" }
       - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }
 
@@ -121,6 +122,7 @@ collections:
     fields:
       - { label: "Nombre", name: "nombre", widget: "string" }
       - { label: "Precio", name: "precio", widget: "string", hint: "Ejemplo: ₡42.000" }
+      - { label: "Tallas", name: "tallas", widget: "string", required: false, hint: "Ejemplo: XS, S, M" }
       - { label: "Imagen", name: "imagen", widget: "image", choose_url: true }
       - { label: "Etiqueta", name: "badge", widget: "string", required: false, hint: "Ejemplo: Nuevo, Más vendido" }
       - label: "Estilo de etiqueta"

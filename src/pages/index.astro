@@ -23,7 +23,7 @@ const productos = (await getCollection('productos')).sort(
 
 <Layout>
   <Header
-    marca="Scrubs"
+    marca="WearOnOff"
     anuncioTexto={a.anuncio_texto}
     anuncioEnlace={a.anuncio_enlace}
     anuncioEnlaceTexto={a.anuncio_enlace_texto}
@@ -59,7 +59,7 @@ const productos = (await getCollection('productos')).sort(
           {colores.map((color) => (
             <a class="figs-color" href="#productos">
               <span class="figs-swatch" style={`--c:${color.data.hex}`}></span>
-              {color.data.nombre}
+              <span class="figs-color__label">{color.data.nombre}{color.data.codigo && <span class="figs-color__code"> ({color.data.codigo})</span>}</span>
             </a>
           ))}
         </div>
@@ -110,6 +110,9 @@ const productos = (await getCollection('productos')).sort(
               <div class="figs-product__body">
                 <h3 class="figs-product__name">{producto.data.nombre}</h3>
                 <p class="figs-product__price">{producto.data.precio}</p>
+                {producto.data.tallas && (
+                  <p class="figs-product__sizes">Tallas: {producto.data.tallas}</p>
+                )}
                 <div class="figs-product__colors">
                   {producto.data.colores.map((color) => (
                     <span class="figs-product__dot" style={`--c:${color.color}`}></span>
@@ -168,5 +171,5 @@ const productos = (await getCollection('productos')).sort(
     </section>
   </main>
 
-  <Footer marca="Scrubs" />
+  <Footer marca="WearOnOff" />
 </Layout>

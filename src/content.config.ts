@@ -47,6 +47,7 @@ const colores = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/colores' }),
   schema: z.object({
     nombre: z.string(),
+    codigo: z.string().default(''),
     hex: z.string(),
     orden: z.number().int().default(0),
   }),
@@ -67,6 +68,7 @@ const productos = defineCollection({
   schema: z.object({
     nombre: z.string(),
     precio: z.string(),
+    tallas: z.string().default(''),
     imagen: z.string().default(''),
     badge: z.string().default(''),
     badge_estilo: z.enum(['dark', 'light']).default('dark'),
