@@ -868,8 +868,9 @@ body.figs {
   }
   .figs-hero--split {
     grid-template-columns: 1fr;
-    min-height: clamp(520px, 76vh, 680px);
-    background: linear-gradient(180deg, #c4c4c4 0%, #d6d5d3 100%);
+    aspect-ratio: 1154 / 912;
+    min-height: 0;
+    background: #222;
     color: #fff;
     text-align: center;
   }
@@ -880,24 +881,35 @@ body.figs {
     justify-content: center;
     max-width: none;
     text-align: center;
-    padding: clamp(4.5rem, 13vw, 7rem) 1.5rem;
+    padding: 1.25rem;
     color: #fff;
   }
   .figs-hero--split .figs-hero__eyebrow {
+    margin-bottom: 0.5rem;
+    font-size: 0.6rem;
     color: rgba(255, 255, 255, 0.9);
   }
+  .figs-hero--split h1 {
+    font-size: clamp(1.9rem, 8vw, 2.6rem);
+    line-height: 0.92;
+  }
   .figs-hero--split .figs-hero__subtitle {
-    max-width: 520px;
-    margin-inline: auto;
+    max-width: 340px;
+    margin: 0.6rem auto 0;
+    font-size: 0.82rem;
+    line-height: 1.4;
     color: rgba(255, 255, 255, 0.88);
   }
   .figs-hero--split .figs-hero__actions {
     justify-content: center;
+    margin-top: 0.9rem;
   }
   .figs-hero--split .figs-hero__actions .figs-btn {
     background: #fff;
     border-color: #fff;
     color: var(--figs-ink);
+    padding: 0.6rem 1rem;
+    font-size: 0.68rem;
   }
   .figs-hero--split .figs-hero__actions .figs-btn--outline {
     background: transparent;
@@ -920,7 +932,7 @@ body.figs {
     );
   }
   .figs-hero--split .figs-hero__media .figs-hero__fg {
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
   }
   .figs-footer__grid {
