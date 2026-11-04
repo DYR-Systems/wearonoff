@@ -30,22 +30,22 @@ const productos = (await getCollection('productos')).sort(
   />
 
   <main>
-    <section class="figs-hero">
-      <div class="figs-hero__media">
-        <img src={a.hero_imagen} alt={a.hero_titulo} />
-      </div>
+    <section class="figs-hero figs-hero--split">
       <div class="figs-hero__content">
         <p class="figs-hero__eyebrow">{a.hero_eyebrow}</p>
         <h1>{a.hero_titulo}</h1>
         <p class="figs-hero__subtitle">{a.hero_subtitulo}</p>
         <div class="figs-hero__actions">
-          <a class="figs-btn figs-btn--light" href={a.hero_cta_primario_url}>
+          <a class="figs-btn" href={a.hero_cta_primario_url}>
             {a.hero_cta_primario_texto}
           </a>
-          <a class="figs-btn figs-btn--ghost-light" href={a.hero_cta_secundario_url}>
+          <a class="figs-btn figs-btn--outline" href={a.hero_cta_secundario_url}>
             {a.hero_cta_secundario_texto}
           </a>
         </div>
+      </div>
+      <div class="figs-hero__media">
+        <img src={a.hero_imagen} alt={a.hero_titulo} />
       </div>
     </section>
 
