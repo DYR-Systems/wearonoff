@@ -45,9 +45,7 @@ Las imágenes subidas se guardan en `public/images/`.
 - Repo: `DYR-Systems/wearonoff`
 - OAuth: `https://dyr-wearonoff-oauth-backend.onrender.com`
 
-Cada cambio del admin crea un commit en la rama `main`. Render reconstruye el sitio automáticamente.
-
-Para usar el botón "Deploy a Producción" del admin, reemplaza `REEMPLAZA_CON_TU_DEPLOY_HOOK` en `public/cms/index.html` con el Deploy Hook de tu servicio en Render.
+Cada cambio del admin crea un commit en la rama `main`. Render reconstruye el sitio automáticamente con Auto-Deploy activado.
 
 ## Despliegue en Render
 
