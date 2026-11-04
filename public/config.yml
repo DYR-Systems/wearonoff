@@ -1,0 +1,138 @@
+backend:
+  name: github
+  repo: DYR-Systems/wearonoff
+  branch: main
+  base_url: https://dyr-wearonoff-oauth-backend.onrender.com
+  auth_endpoint: auth
+
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+locale: "es"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+collections:
+  - name: "ajustes"
+    label: "Página de inicio"
+    media_folder: "public/images/inicio"
+    public_folder: "/images/inicio"
+    files:
+      - name: "general"
+        label: "Ajustes generales"
+        file: "src/content/ajustes/general.md"
+        fields:
+          - { label: "Barra de anuncio", name: "anuncio_texto", widget: "string" }
+          - { label: "Enlace del anuncio", name: "anuncio_enlace", widget: "string", default: "#colores" }
+          - { label: "Texto del enlace del anuncio", name: "anuncio_enlace_texto", widget: "string", default: "Compra ahora" }
+          - { label: "Hero: etiqueta", name: "hero_eyebrow", widget: "string" }
+          - { label: "Hero: título", name: "hero_titulo", widget: "string" }
+          - { label: "Hero: subtítulo", name: "hero_subtitulo", widget: "text" }
+          - { label: "Hero: imagen", name: "hero_imagen", widget: "image", choose_url: true }
+          - { label: "Hero: botón principal", name: "hero_cta_primario_texto", widget: "string" }
+          - { label: "Hero: enlace botón principal", name: "hero_cta_primario_url", widget: "string" }
+          - { label: "Hero: botón secundario", name: "hero_cta_secundario_texto", widget: "string" }
+          - { label: "Hero: enlace botón secundario", name: "hero_cta_secundario_url", widget: "string" }
+          - { label: "Colores: título", name: "colores_titulo", widget: "string" }
+          - { label: "Colores: subtítulo", name: "colores_subtitulo", widget: "text" }
+          - { label: "Categorías: título", name: "categorias_titulo", widget: "string" }
+          - { label: "Categorías: subtítulo", name: "categorias_subtitulo", widget: "text" }
+          - { label: "Productos: título", name: "productos_titulo", widget: "string" }
+          - { label: "Productos: subtítulo", name: "productos_subtitulo", widget: "text" }
+          - { label: "Productos: texto del botón", name: "productos_cta_texto", widget: "string" }
+          - { label: "Productos: enlace del botón", name: "productos_cta_url", widget: "string" }
+          - { label: "Tela: etiqueta", name: "tela_eyebrow", widget: "string" }
+          - { label: "Tela: título", name: "tela_titulo", widget: "string" }
+          - { label: "Tela: descripción", name: "tela_descripcion", widget: "text" }
+          - { label: "Tela: imagen", name: "tela_imagen", widget: "image", choose_url: true }
+          - label: "Tela: beneficios"
+            name: "tela_bullets"
+            widget: "list"
+            summary: "{{fields.item}}"
+            field: { label: "Beneficio", name: "item", widget: "string" }
+          - { label: "Tela: texto del botón", name: "tela_cta_texto", widget: "string" }
+          - { label: "Tela: enlace del botón", name: "tela_cta_url", widget: "string" }
+          - { label: "Equipo: título", name: "equipo_titulo", widget: "string" }
+          - { label: "Equipo: descripción", name: "equipo_descripcion", widget: "text" }
+          - { label: "Equipo: imagen", name: "equipo_imagen", widget: "image", choose_url: true }
+          - { label: "Equipo: texto del botón", name: "equipo_cta_texto", widget: "string" }
+          - { label: "Equipo: enlace del botón", name: "equipo_cta_url", widget: "string" }
+          - { label: "Redes: texto", name: "redes_handle", widget: "string" }
+          - { label: "Redes: Instagram", name: "redes_instagram", widget: "string" }
+          - { label: "Redes: TikTok", name: "redes_tiktok", widget: "string" }
+          - { label: "Redes: YouTube", name: "redes_youtube", widget: "string" }
+          - { label: "Redes: Pinterest", name: "redes_pinterest", widget: "string" }
+
+  - name: "colores"
+    label: "Colores"
+    label_singular: "Color"
+    folder: "src/content/colores"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "nombre"
+    summary: "{{nombre}}"
+    sortable_fields: ["orden", "nombre"]
+    fields:
+      - { label: "Nombre", name: "nombre", widget: "string" }
+      - { label: "Color", name: "hex", widget: "color" }
+      - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }
+
+  - name: "categorias"
+    label: "Categorías"
+    label_singular: "Categoría"
+    folder: "src/content/categorias"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "nombre"
+    summary: "{{nombre}}"
+    sortable_fields: ["orden", "nombre"]
+    media_folder: "public/images/categorias"
+    public_folder: "/images/categorias"
+    fields:
+      - { label: "Nombre", name: "nombre", widget: "string" }
+      - { label: "Imagen", name: "imagen", widget: "image", choose_url: true }
+      - { label: "Enlace", name: "enlace", widget: "string", default: "#productos" }
+      - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }
+
+  - name: "productos"
+    label: "Productos"
+    label_singular: "Producto"
+    folder: "src/content/productos"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "nombre"
+    summary: "{{nombre}} — {{precio}}"
+    sortable_fields: ["orden", "nombre"]
+    media_folder: "public/images/productos"
+    public_folder: "/images/productos"
+    fields:
+      - { label: "Nombre", name: "nombre", widget: "string" }
+      - { label: "Precio", name: "precio", widget: "string", hint: "Ejemplo: ₡42.000" }
+      - { label: "Imagen", name: "imagen", widget: "image", choose_url: true }
+      - { label: "Etiqueta", name: "badge", widget: "string", required: false, hint: "Ejemplo: Nuevo, Más vendido" }
+      - label: "Estilo de etiqueta"
+        name: "badge_estilo"
+        widget: "select"
+        default: "dark"
+        options:
+          - { label: "Oscura", value: "dark" }
+          - { label: "Clara", value: "light" }
+      - label: "Colores disponibles"
+        name: "colores"
+        widget: "list"
+        summary: "{{fields.color}}"
+        field: { label: "Color", name: "color", widget: "color" }
+      - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }
