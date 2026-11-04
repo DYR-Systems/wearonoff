@@ -1,17 +1,24 @@
-# Python
+# Dependencies
+node_modules/
+
+# Astro
+dist/
+.astro/
+
+# Python legacy
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
-
-# Virtualenv
 venv/
 .venv/
 
 # Environment / secrets
 .env
+.env.*
+!.env.example
 
 # Runtime data
 instance/*.db
@@ -19,10 +26,12 @@ instance/*.sqlite3
 instance/uploads/*
 !instance/uploads/.gitkeep
 
-# OS / editors
+# IDE / editors
 .DS_Store
+Thumbs.db
 .idea/
 .vscode/
 
-# Local logs
+# Logs
 *.log
+npm-debug.log*

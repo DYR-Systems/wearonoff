@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: wearonoff-web
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /cms/*
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /config.yml
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /*
+        name: Cache-Control
+        value: no-cache, no-store, must-revalidate
+      - path: /_astro/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+    routes:
+      - type: redirect
+        source: /admin
+        destination: /cms
+      - type: redirect
+        source: /admin/*
+        destination: /cms/*
