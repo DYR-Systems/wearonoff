@@ -27,7 +27,7 @@ body.figs {
   max-width: 100%;
 }
 
-.figs a {
+:where(.figs a) {
   color: inherit;
   text-decoration: none;
 }
@@ -201,7 +201,7 @@ body.figs {
 }
 
 .figs-logo img {
-  height: 34px;
+  height: 36px;
   width: auto;
 }
 
