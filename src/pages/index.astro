@@ -19,6 +19,40 @@ const categorias = (await getCollection('categorias')).sort(
 const productos = (await getCollection('productos')).sort(
   (x, y) => x.data.orden - y.data.orden
 );
+
+const colorInfo: Record<string, { nombre: string; codigo: string }> = {};
+for (const color of colores) {
+  colorInfo[color.data.hex.toLowerCase()] = {
+    nombre: color.data.nombre,
+    codigo: color.data.codigo,
+  };
+}
+
+const productsData = productos.map((producto) => ({
+  id: producto.id,
+  nombre: producto.data.nombre,
+  precio: producto.data.precio,
+  imagen: producto.data.imagen,
+  fotosPorColor: Object.fromEntries(
+    (producto.data.fotos_por_color ?? []).map((foto) => [
+      foto.codigo.trim().toLowerCase(),
+      foto.imagen,
+    ])
+  ),
+  badge: producto.data.badge,
+  tallas: producto.data.tallas
+    .split(',')
+    .map((talla) => talla.trim())
+    .filter(Boolean),
+  colores: producto.data.colores.map((color) => {
+    const info = colorInfo[color.color.toLowerCase()];
+    return {
+      hex: color.color,
+      nombre: info?.nombre ?? '',
+      codigo: info?.codigo ?? '',
+    };
+  }),
+}));
 ---
 
 <Layout>
@@ -57,7 +91,13 @@ const productos = (await getCollection('productos')).sort(
         </div>
         <div class="figs-colors">
           {colores.map((color) => (
-            <a class="figs-color" href="#productos">
+            <a
+              class="figs-color"
+              href="#productos"
+              data-color={color.data.hex}
+              data-code={color.data.codigo}
+              data-name={color.data.nombre}
+            >
               <span class="figs-swatch" style={`--c:${color.data.hex}`}></span>
               <span class="figs-color__label">{color.data.nombre}{color.data.codigo && <span class="figs-color__code"> ({color.data.codigo})</span>}</span>
             </a>
@@ -91,9 +131,21 @@ const productos = (await getCollection('productos')).sort(
           <h2>{a.productos_titulo}</h2>
           <p>{a.productos_subtitulo}</p>
         </div>
+        <div class="figs-filter" id="figs-color-filter" hidden>
+          <span class="figs-filter__text">
+            Color:
+            <span class="figs-filter__swatch" id="figs-filter-swatch"></span>
+            <strong id="figs-filter-name"></strong>
+          </span>
+          <button class="figs-filter__clear" type="button" id="figs-filter-clear">Ver todos</button>
+        </div>
         <div class="figs-products">
           {productos.map((producto) => (
-            <article class="figs-product">
+            <article
+              class="figs-product"
+              data-product-id={producto.id}
+              data-colores={producto.data.colores.map((color) => color.color.toLowerCase()).join(' ')}
+            >
               <div class="figs-product__media">
                 {producto.data.badge && (
                   <span
@@ -105,7 +157,18 @@ const productos = (await getCollection('productos')).sort(
                     {producto.data.badge}
                   </span>
                 )}
-                <img src={producto.data.imagen} alt={producto.data.nombre} loading="lazy" />
+                <img
+                  src={producto.data.imagen}
+                  alt={producto.data.nombre}
+                  data-default-src={producto.data.imagen}
+                  loading="lazy"
+                />
+                <button
+                  class="figs-product__open"
+                  type="button"
+                  data-product-id={producto.id}
+                  aria-label={`Ver opciones de ${producto.data.nombre}`}
+                ></button>
               </div>
               <div class="figs-product__body">
                 <h3 class="figs-product__name">{producto.data.nombre}</h3>
@@ -114,10 +177,27 @@ const productos = (await getCollection('productos')).sort(
                   <p class="figs-product__sizes">Tallas: {producto.data.tallas}</p>
                 )}
                 <div class="figs-product__colors">
-                  {producto.data.colores.map((color) => (
-                    <span class="figs-product__dot" style={`--c:${color.color}`}></span>
-                  ))}
+                  {producto.data.colores.map((color) => {
+                    const info = colorInfo[color.color.toLowerCase()];
+                    const label = info
+                      ? `${info.nombre}${info.codigo ? ` (${info.codigo})` : ''}`
+                      : color.color;
+                    return (
+                      <button
+                        class="figs-product__dot"
+                        type="button"
+                        style={`--c:${color.color}`}
+                        data-product-id={producto.id}
+                        data-color={color.color}
+                        title={label}
+                        aria-label={`Ver ${producto.data.nombre} en ${label}`}
+                      ></button>
+                    );
+                  })}
                 </div>
+                <button class="figs-product__options" type="button" data-product-id={producto.id}>
+                  Ver opciones
+                </button>
               </div>
             </article>
           ))}
@@ -170,6 +250,49 @@ const productos = (await getCollection('productos')).sort(
       </div>
     </section>
   </main>
+
+  <script
+    type="application/json"
+    id="figs-products-data"
+    set:html={JSON.stringify(productsData).replace(/</g, '\\u003c')}
+  ></script>
+
+  <div class="figs-modal" id="figs-product-modal" hidden>
+    <div class="figs-modal__backdrop" data-modal-close></div>
+    <div class="figs-modal__panel" role="dialog" aria-modal="true" aria-labelledby="figs-modal-title">
+      <button class="figs-modal__close" type="button" data-modal-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="figs-modal__media">
+        <img id="figs-modal-img" alt="" />
+        <p class="figs-modal__photo-note" id="figs-modal-photo-note" hidden>Foto de referencia del color base.</p>
+      </div>
+      <div class="figs-modal__body">
+        <p class="figs-modal__badge" id="figs-modal-badge" hidden></p>
+        <h2 class="figs-modal__title" id="figs-modal-title"></h2>
+        <p class="figs-modal__price" id="figs-modal-price"></p>
+        <div class="figs-modal__group">
+          <p class="figs-modal__label">Color: <span id="figs-modal-color-label"></span></p>
+          <div class="figs-modal__colors" id="figs-modal-colors"></div>
+        </div>
+        <div class="figs-modal__group">
+          <p class="figs-modal__label">Talla</p>
+          <div class="figs-modal__sizes" id="figs-modal-sizes"></div>
+        </div>
+        <div class="figs-modal__group">
+          <label class="figs-modal__label" for="figs-modal-qty">Cantidad</label>
+          <input class="figs-modal__qty" id="figs-modal-qty" type="number" min="1" value="1" inputmode="numeric" />
+        </div>
+        <p class="figs-modal__error" id="figs-modal-error" role="alert" hidden>Selecciona una talla para continuar.</p>
+        <button class="figs-btn figs-btn--block figs-modal__cta" id="figs-modal-cta" type="button">
+          Solicitar cotización
+        </button>
+        <p class="figs-modal__note">Te contactamos para confirmar disponibilidad y precio.</p>
+      </div>
+    </div>
+  </div>
 
   <Footer marca="WearOnOff" />
 </Layout>

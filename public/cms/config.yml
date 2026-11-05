@@ -137,4 +137,27 @@ collections:
         widget: "list"
         summary: "{{fields.color}}"
         field: { label: "Color", name: "color", widget: "color" }
+      - label: "Fotos por color"
+        name: "fotos_por_color"
+        widget: "list"
+        required: false
+        summary: "{{fields.codigo}}"
+        hint: "Opcional. Si un color no tiene foto, se muestra la imagen principal."
+        fields:
+          - label: "Código"
+            name: "codigo"
+            widget: "select"
+            options:
+              - G2
+              - G4
+              - G8
+              - G20
+              - G21
+              - G24
+              - G27
+              - G28
+          - label: "Foto"
+            name: "imagen"
+            widget: "image"
+            choose_url: true
       - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }

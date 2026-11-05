@@ -73,6 +73,9 @@ const productos = defineCollection({
     badge: z.string().default(''),
     badge_estilo: z.enum(['dark', 'light']).default('dark'),
     colores: z.array(z.object({ color: z.string() })).default([]),
+    fotos_por_color: z
+      .array(z.object({ codigo: z.string(), imagen: z.string() }))
+      .default([]),
     orden: z.number().int().default(0),
   }),
 });
