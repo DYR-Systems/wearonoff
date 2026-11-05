@@ -17,7 +17,7 @@ categorias_subtitulo: "Uniformes y conjuntos disponibles en stock para entrega i
 productos_titulo: "En stock"
 productos_subtitulo: "Nuevos ingresos disponibles para entrega inmediata."
 productos_cta_texto: "Ver toda la colección"
-productos_cta_url: "#"
+productos_cta_url: "/coleccion"
 tela_eyebrow: "Composición y cuidados"
 tela_titulo: "Materiales"
 tela_descripcion: "Una mezcla pensada para acompañarte en cada turno: suave al tacto, con elasticidad y transpirabilidad para moverte sin límites."

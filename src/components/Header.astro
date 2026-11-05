@@ -12,6 +12,9 @@ const {
   anuncioEnlace = '#colores',
   anuncioEnlaceTexto = 'Compra ahora',
 } = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const home = path === '/' ? '' : '/';
 ---
 
 <div class="wearonoff-announce">
@@ -34,11 +37,11 @@ const {
     </button>
 
     <nav class="wearonoff-header__nav" aria-label="Principal">
-      <a href="#mujeres">Mujeres</a>
-      <a href="#hombres">Hombres</a>
-      <a href="#colores">Colores</a>
-      <a href="#telas">Materiales</a>
-      <a href="#equipo">Equipos</a>
+      <a href={`${home}#mujeres`}>Mujeres</a>
+      <a href={`${home}#hombres`}>Hombres</a>
+      <a href={`${home}#colores`}>Colores</a>
+      <a href={`${home}#telas`}>Materiales</a>
+      <a href={`${home}#equipo`}>Equipos</a>
     </nav>
 
     <a class="wearonoff-logo" href="/" aria-label="ON & OFF">
@@ -82,11 +85,11 @@ const {
     </button>
   </div>
   <nav class="wearonoff-drawer__nav" aria-label="Móvil">
-    <a href="#mujeres">Mujeres</a>
-    <a href="#hombres">Hombres</a>
-    <a href="#colores">Colores</a>
-    <a href="#telas">Materiales</a>
-    <a href="#equipo">Equipos</a>
-    <a href="#productos">Comprar</a>
+    <a href={`${home}#mujeres`}>Mujeres</a>
+    <a href={`${home}#hombres`}>Hombres</a>
+    <a href={`${home}#colores`}>Colores</a>
+    <a href={`${home}#telas`}>Materiales</a>
+    <a href={`${home}#equipo`}>Equipos</a>
+    <a href={`${home}#productos`}>Comprar</a>
   </nav>
 </div>

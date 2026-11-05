@@ -1,0 +1,241 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const ajustesEntry = await getEntry('ajustes', 'general');
+if (!ajustesEntry) {
+  throw new Error('Falta src/content/ajustes/general.md');
+}
+const a = ajustesEntry.data;
+
+const colores = (await getCollection('colores')).sort(
+  (x, y) => x.data.orden - y.data.orden
+);
+const productos = (await getCollection('productos')).sort(
+  (x, y) => x.data.orden - y.data.orden
+);
+
+const colorInfo: Record<string, { nombre: string; codigo: string }> = {};
+for (const color of colores) {
+  colorInfo[color.data.hex.toLowerCase()] = {
+    nombre: color.data.nombre,
+    codigo: color.data.codigo,
+  };
+}
+
+const productsData = productos.map((producto) => ({
+  id: producto.id,
+  nombre: producto.data.nombre,
+  precio: producto.data.precio,
+  imagen: producto.data.imagen,
+  fotosPorColor: Object.fromEntries(
+    (producto.data.fotos_por_color ?? []).map((foto) => [
+      foto.codigo.trim().toLowerCase(),
+      foto.imagen,
+    ])
+  ),
+  badge: producto.data.badge,
+  tallas: producto.data.tallas
+    .split(',')
+    .map((talla) => talla.trim())
+    .filter(Boolean),
+  colores: producto.data.colores.map((color) => {
+    const info = colorInfo[color.color.toLowerCase()];
+    return {
+      hex: color.color,
+      nombre: info?.nombre ?? '',
+      codigo: info?.codigo ?? '',
+    };
+  }),
+}));
+---
+
+<Layout
+  title="Colección completa — WearOnOff"
+  description="Explora todos los diseños de uniformes y conjuntos WearOnOff disponibles en stock."
+>
+  <Header
+    marca="WearOnOff"
+    anuncioTexto={a.anuncio_texto}
+    anuncioEnlace={a.anuncio_enlace}
+    anuncioEnlaceTexto={a.anuncio_enlace_texto}
+  />
+
+  <main>
+    <section class="wearonoff-collection-hero">
+      <div class="wearonoff-container">
+        <p class="wearonoff-eyebrow">Colección</p>
+        <h1>Todos los diseños</h1>
+        <p>
+          Explora la colección completa de uniformes y conjuntos disponibles en
+          stock. Cada diseño se puede cotizar en varias tallas y colores.
+        </p>
+        <div class="wearonoff-collection-hero__meta">
+          <span class="wearonoff-collection-hero__count">
+            {productos.length} diseños disponibles
+          </span>
+          <a class="wearonoff-btn wearonoff-btn--outline" href="/">Volver al inicio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wearonoff-section wearonoff-section--soft" id="colores">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
+          <h2>Filtrar por color</h2>
+          <p>Toca un color para ver los diseños disponibles en ese color.</p>
+        </div>
+        <div class="wearonoff-colors">
+          {colores.map((color) => (
+            <a
+              class="wearonoff-color"
+              href="#productos"
+              data-color={color.data.hex}
+              data-code={color.data.codigo}
+              data-name={color.data.nombre}
+            >
+              <span class="wearonoff-swatch" style={`--c:${color.data.hex}`}></span>
+              <span class="wearonoff-color__label">{color.data.nombre}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="wearonoff-section" id="productos">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
+          <h2>Diseños disponibles</h2>
+          <p>
+            Todos los modelos en stock. Elige un diseño para ver sus colores,
+            tallas y opciones de cotización.
+          </p>
+        </div>
+        <div class="wearonoff-filter" id="wearonoff-color-filter" hidden>
+          <span class="wearonoff-filter__text">
+            Color:
+            <span class="wearonoff-filter__swatch" id="wearonoff-filter-swatch"></span>
+            <strong id="wearonoff-filter-name"></strong>
+          </span>
+          <button class="wearonoff-filter__clear" type="button" id="wearonoff-filter-clear">Ver todos</button>
+        </div>
+        <div class="wearonoff-products">
+          {productos.map((producto) => (
+            <article
+              class="wearonoff-product"
+              data-product-id={producto.id}
+              data-colores={producto.data.colores.map((color) => color.color.toLowerCase()).join(' ')}
+            >
+              <div class="wearonoff-product__media">
+                {producto.data.badge && (
+                  <span
+                    class:list={[
+                      'wearonoff-badge',
+                      producto.data.badge_estilo === 'light' && 'wearonoff-badge--light',
+                    ]}
+                  >
+                    {producto.data.badge}
+                  </span>
+                )}
+                <img
+                  src={producto.data.imagen}
+                  alt={producto.data.nombre}
+                  data-default-src={producto.data.imagen}
+                  loading="lazy"
+                />
+                <button
+                  class="wearonoff-product__open"
+                  type="button"
+                  data-product-id={producto.id}
+                  aria-label={`Ver opciones de ${producto.data.nombre}`}
+                ></button>
+              </div>
+              <div class="wearonoff-product__body">
+                <h3 class="wearonoff-product__name">{producto.data.nombre}</h3>
+                <p class="wearonoff-product__price">{producto.data.precio}</p>
+                {producto.data.tallas && (
+                  <p class="wearonoff-product__sizes">Tallas: {producto.data.tallas}</p>
+                )}
+                <div class="wearonoff-product__colors">
+                  {producto.data.colores.map((color) => {
+                    const info = colorInfo[color.color.toLowerCase()];
+                    const label = info ? info.nombre : color.color;
+                    return (
+                      <button
+                        class="wearonoff-product__dot"
+                        type="button"
+                        style={`--c:${color.color}`}
+                        data-product-id={producto.id}
+                        data-color={color.color}
+                        title={label}
+                        aria-label={`Ver ${producto.data.nombre} en ${label}`}
+                      ></button>
+                    );
+                  })}
+                </div>
+                <button class="wearonoff-product__options" type="button" data-product-id={producto.id}>
+                  Ver opciones
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="wearonoff-products__more">
+          <a
+            class="wearonoff-btn wearonoff-btn--outline"
+            href="mailto:hola@wearonoff.com?subject=Consulta%20por%20un%20dise%C3%B1o"
+          >
+            ¿Buscas otro diseño? Escríbenos
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script
+    type="application/json"
+    id="wearonoff-products-data"
+    set:html={JSON.stringify(productsData).replace(/</g, '\\u003c')}
+  ></script>
+
+  <div class="wearonoff-modal" id="wearonoff-product-modal" hidden>
+    <div class="wearonoff-modal__backdrop" data-modal-close></div>
+    <div class="wearonoff-modal__panel" role="dialog" aria-modal="true" aria-labelledby="wearonoff-modal-title">
+      <button class="wearonoff-modal__close" type="button" data-modal-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="wearonoff-modal__media">
+        <img id="wearonoff-modal-img" alt="" />
+        <p class="wearonoff-modal__photo-note" id="wearonoff-modal-photo-note" hidden>Foto de referencia del color base.</p>
+      </div>
+      <div class="wearonoff-modal__body">
+        <p class="wearonoff-modal__badge" id="wearonoff-modal-badge" hidden></p>
+        <h2 class="wearonoff-modal__title" id="wearonoff-modal-title"></h2>
+        <p class="wearonoff-modal__price" id="wearonoff-modal-price"></p>
+        <div class="wearonoff-modal__group">
+          <p class="wearonoff-modal__label">Color: <span id="wearonoff-modal-color-label"></span></p>
+          <div class="wearonoff-modal__colors" id="wearonoff-modal-colors"></div>
+        </div>
+        <div class="wearonoff-modal__group">
+          <p class="wearonoff-modal__label">Talla</p>
+          <div class="wearonoff-modal__sizes" id="wearonoff-modal-sizes"></div>
+        </div>
+        <div class="wearonoff-modal__group">
+          <label class="wearonoff-modal__label" for="wearonoff-modal-qty">Cantidad</label>
+          <input class="wearonoff-modal__qty" id="wearonoff-modal-qty" type="number" min="1" value="1" inputmode="numeric" />
+        </div>
+        <p class="wearonoff-modal__error" id="wearonoff-modal-error" role="alert" hidden>Selecciona una talla para continuar.</p>
+        <button class="wearonoff-btn wearonoff-btn--block wearonoff-modal__cta" id="wearonoff-modal-cta" type="button">
+          Solicitar cotización
+        </button>
+        <p class="wearonoff-modal__note">Te contactamos para confirmar disponibilidad y precio.</p>
+      </div>
+    </div>
+  </div>
+
+  <Footer marca="WearOnOff" />
+</Layout>

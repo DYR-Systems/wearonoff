@@ -1446,3 +1446,44 @@ body.wearonoff-modal-open {
     align-items: flex-start;
   }
 }
+
+/* Collection */
+#colores,
+#productos {
+  scroll-margin-top: 90px;
+}
+
+.wearonoff-collection-hero {
+  padding: clamp(3.2rem, 7vw, 6rem) 0 clamp(2.4rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--wearonoff-line);
+}
+
+.wearonoff-collection-hero h1 {
+  max-width: 100%;
+  font-size: clamp(2.2rem, 8vw, 6rem);
+  line-height: 0.9;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.wearonoff-collection-hero p:not(.wearonoff-eyebrow) {
+  max-width: 620px;
+  margin: 1.2rem 0 0;
+  color: var(--wearonoff-muted);
+}
+
+.wearonoff-collection-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.wearonoff-collection-hero__count {
+  color: var(--wearonoff-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
