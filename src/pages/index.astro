@@ -19,6 +19,40 @@ const categorias = (await getCollection('categorias')).sort(
 const productos = (await getCollection('productos')).sort(
   (x, y) => x.data.orden - y.data.orden
 );
+
+const colorInfo: Record<string, { nombre: string; codigo: string }> = {};
+for (const color of colores) {
+  colorInfo[color.data.hex.toLowerCase()] = {
+    nombre: color.data.nombre,
+    codigo: color.data.codigo,
+  };
+}
+
+const productsData = productos.map((producto) => ({
+  id: producto.id,
+  nombre: producto.data.nombre,
+  precio: producto.data.precio,
+  imagen: producto.data.imagen,
+  fotosPorColor: Object.fromEntries(
+    (producto.data.fotos_por_color ?? []).map((foto) => [
+      foto.codigo.trim().toLowerCase(),
+      foto.imagen,
+    ])
+  ),
+  badge: producto.data.badge,
+  tallas: producto.data.tallas
+    .split(',')
+    .map((talla) => talla.trim())
+    .filter(Boolean),
+  colores: producto.data.colores.map((color) => {
+    const info = colorInfo[color.color.toLowerCase()];
+    return {
+      hex: color.color,
+      nombre: info?.nombre ?? '',
+      codigo: info?.codigo ?? '',
+    };
+  }),
+}));
 ---
 
 <Layout>
@@ -57,7 +91,13 @@ const productos = (await getCollection('productos')).sort(
         </div>
         <div class="wearonoff-colors">
           {colores.map((color) => (
-            <a class="wearonoff-color" href="#productos">
+            <a
+              class="wearonoff-color"
+              href="#productos"
+              data-color={color.data.hex}
+              data-code={color.data.codigo}
+              data-name={color.data.nombre}
+            >
               <span class="wearonoff-swatch" style={`--c:${color.data.hex}`}></span>
               <span class="wearonoff-color__label">{color.data.nombre}{color.data.codigo && <span class="wearonoff-color__code"> ({color.data.codigo})</span>}</span>
             </a>
@@ -91,9 +131,21 @@ const productos = (await getCollection('productos')).sort(
           <h2>{a.productos_titulo}</h2>
           <p>{a.productos_subtitulo}</p>
         </div>
+        <div class="wearonoff-filter" id="wearonoff-color-filter" hidden>
+          <span class="wearonoff-filter__text">
+            Color:
+            <span class="wearonoff-filter__swatch" id="wearonoff-filter-swatch"></span>
+            <strong id="wearonoff-filter-name"></strong>
+          </span>
+          <button class="wearonoff-filter__clear" type="button" id="wearonoff-filter-clear">Ver todos</button>
+        </div>
         <div class="wearonoff-products">
           {productos.map((producto) => (
-            <article class="wearonoff-product">
+            <article
+              class="wearonoff-product"
+              data-product-id={producto.id}
+              data-colores={producto.data.colores.map((color) => color.color.toLowerCase()).join(' ')}
+            >
               <div class="wearonoff-product__media">
                 {producto.data.badge && (
                   <span
@@ -105,7 +157,18 @@ const productos = (await getCollection('productos')).sort(
                     {producto.data.badge}
                   </span>
                 )}
-                <img src={producto.data.imagen} alt={producto.data.nombre} loading="lazy" />
+                <img
+                  src={producto.data.imagen}
+                  alt={producto.data.nombre}
+                  data-default-src={producto.data.imagen}
+                  loading="lazy"
+                />
+                <button
+                  class="wearonoff-product__open"
+                  type="button"
+                  data-product-id={producto.id}
+                  aria-label={`Ver opciones de ${producto.data.nombre}`}
+                ></button>
               </div>
               <div class="wearonoff-product__body">
                 <h3 class="wearonoff-product__name">{producto.data.nombre}</h3>
@@ -114,10 +177,27 @@ const productos = (await getCollection('productos')).sort(
                   <p class="wearonoff-product__sizes">Tallas: {producto.data.tallas}</p>
                 )}
                 <div class="wearonoff-product__colors">
-                  {producto.data.colores.map((color) => (
-                    <span class="wearonoff-product__dot" style={`--c:${color.color}`}></span>
-                  ))}
+                  {producto.data.colores.map((color) => {
+                    const info = colorInfo[color.color.toLowerCase()];
+                    const label = info
+                      ? `${info.nombre}${info.codigo ? ` (${info.codigo})` : ''}`
+                      : color.color;
+                    return (
+                      <button
+                        class="wearonoff-product__dot"
+                        type="button"
+                        style={`--c:${color.color}`}
+                        data-product-id={producto.id}
+                        data-color={color.color}
+                        title={label}
+                        aria-label={`Ver ${producto.data.nombre} en ${label}`}
+                      ></button>
+                    );
+                  })}
                 </div>
+                <button class="wearonoff-product__options" type="button" data-product-id={producto.id}>
+                  Ver opciones
+                </button>
               </div>
             </article>
           ))}
@@ -170,6 +250,49 @@ const productos = (await getCollection('productos')).sort(
       </div>
     </section>
   </main>
+
+  <script
+    type="application/json"
+    id="wearonoff-products-data"
+    set:html={JSON.stringify(productsData).replace(/</g, '\\u003c')}
+  ></script>
+
+  <div class="wearonoff-modal" id="wearonoff-product-modal" hidden>
+    <div class="wearonoff-modal__backdrop" data-modal-close></div>
+    <div class="wearonoff-modal__panel" role="dialog" aria-modal="true" aria-labelledby="wearonoff-modal-title">
+      <button class="wearonoff-modal__close" type="button" data-modal-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="wearonoff-modal__media">
+        <img id="wearonoff-modal-img" alt="" />
+        <p class="wearonoff-modal__photo-note" id="wearonoff-modal-photo-note" hidden>Foto de referencia del color base.</p>
+      </div>
+      <div class="wearonoff-modal__body">
+        <p class="wearonoff-modal__badge" id="wearonoff-modal-badge" hidden></p>
+        <h2 class="wearonoff-modal__title" id="wearonoff-modal-title"></h2>
+        <p class="wearonoff-modal__price" id="wearonoff-modal-price"></p>
+        <div class="wearonoff-modal__group">
+          <p class="wearonoff-modal__label">Color: <span id="wearonoff-modal-color-label"></span></p>
+          <div class="wearonoff-modal__colors" id="wearonoff-modal-colors"></div>
+        </div>
+        <div class="wearonoff-modal__group">
+          <p class="wearonoff-modal__label">Talla</p>
+          <div class="wearonoff-modal__sizes" id="wearonoff-modal-sizes"></div>
+        </div>
+        <div class="wearonoff-modal__group">
+          <label class="wearonoff-modal__label" for="wearonoff-modal-qty">Cantidad</label>
+          <input class="wearonoff-modal__qty" id="wearonoff-modal-qty" type="number" min="1" value="1" inputmode="numeric" />
+        </div>
+        <p class="wearonoff-modal__error" id="wearonoff-modal-error" role="alert" hidden>Selecciona una talla para continuar.</p>
+        <button class="wearonoff-btn wearonoff-btn--block wearonoff-modal__cta" id="wearonoff-modal-cta" type="button">
+          Solicitar cotización
+        </button>
+        <p class="wearonoff-modal__note">Te contactamos para confirmar disponibilidad y precio.</p>
+      </div>
+    </div>
+  </div>
 
   <Footer marca="WearOnOff" />
 </Layout>
