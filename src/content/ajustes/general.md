@@ -60,4 +60,5 @@ estudiantes_cta_url: "mailto:hola@wearonoff.com?subject=Descuento%20para%20estud
 redes_handle: "Humanos extraordinarios · #wearonoff"
 redes_instagram: "https://www.instagram.com/"
 redes_facebook: "https://www.facebook.com/"
+whatsapp_numero: "50660658625"
 ---

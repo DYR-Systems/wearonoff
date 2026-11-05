@@ -1,14 +1,17 @@
 ---
 import '../styles/wearonoff.css';
+import CartDrawer from '../components/CartDrawer.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  whatsapp?: string;
 }
 
 const {
   title = 'WearOnOff — Uniformes médicos con estilo',
   description = 'Uniformes médicos con estilo. Comodidad, materiales de calidad y diseño para quienes trabajan sin descanso.',
+  whatsapp = '50660658625',
 } = Astro.props;
 ---
 
@@ -23,6 +26,7 @@ const {
   </head>
   <body class="wearonoff">
     <slot />
+    <CartDrawer whatsapp={whatsapp} />
     <script src="/js/wearonoff.js" defer></script>
   </body>
 </html>

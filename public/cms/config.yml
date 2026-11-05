@@ -78,6 +78,7 @@ collections:
           - { label: "Redes: texto", name: "redes_handle", widget: "string" }
           - { label: "Redes: Instagram", name: "redes_instagram", widget: "string" }
           - { label: "Redes: Facebook", name: "redes_facebook", widget: "string" }
+          - { label: "WhatsApp", name: "whatsapp_numero", widget: "string", hint: "Solo dígitos con código de país. Ej: 50660658625" }
 
   - name: "colores"
     label: "Colores"
@@ -172,4 +173,32 @@ collections:
             name: "imagen"
             widget: "image"
             choose_url: true
+      - { label: "Stock total", name: "stock", widget: "number", value_type: "int", default: 0, min: 0, hint: "Se usa si no hay inventario por color y talla." }
+      - label: "Inventario por color y talla"
+        name: "inventario"
+        widget: "list"
+        required: false
+        summary: "{{fields.codigo}} / {{fields.talla}} — {{fields.stock}}"
+        hint: "Una fila por color y talla. Si agregas filas, se usa este inventario; si está vacío, se usa el stock total."
+        fields:
+          - label: "Código de color"
+            name: "codigo"
+            widget: "select"
+            options:
+              - G2
+              - G4
+              - G8
+              - G20
+              - G21
+              - G24
+              - G27
+              - G28
+          - label: "Talla"
+            name: "talla"
+            widget: "select"
+            options:
+              - XS
+              - S
+              - M
+          - { label: "Stock", name: "stock", widget: "number", value_type: "int", default: 0, min: 0 }
       - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }

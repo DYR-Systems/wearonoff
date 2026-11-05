@@ -1,0 +1,52 @@
+---
+interface Props {
+  whatsapp?: string;
+}
+
+const { whatsapp = '50660658625' } = Astro.props;
+---
+
+<div class="wearonoff-cart" id="wearonoff-cart" data-whatsapp={whatsapp} hidden>
+  <div class="wearonoff-cart__backdrop" data-cart-close></div>
+  <aside
+    class="wearonoff-cart__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="wearonoff-cart-title"
+    tabindex="-1"
+  >
+    <div class="wearonoff-cart__head">
+      <h2 id="wearonoff-cart-title">Tu carrito</h2>
+      <button class="wearonoff-icon-btn" type="button" data-cart-close aria-label="Cerrar carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="wearonoff-cart__body">
+      <p class="wearonoff-cart__empty" id="wearonoff-cart-empty">
+        Tu carrito está vacío. Agrega una prenda desde la colección.
+      </p>
+      <div class="wearonoff-cart__items" id="wearonoff-cart-items"></div>
+    </div>
+
+    <div class="wearonoff-cart__foot">
+      <p class="wearonoff-cart__note">
+        Los precios se confirman por WhatsApp. No se realiza ningún cobro en línea.
+      </p>
+      <a
+        class="wearonoff-btn wearonoff-btn--block"
+        id="wearonoff-cart-whatsapp"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        Cotizar por WhatsApp
+      </a>
+      <button class="wearonoff-cart__clear" type="button" data-cart-clear>
+        Vaciar carrito
+      </button>
+    </div>
+  </aside>
+</div>

@@ -48,6 +48,7 @@ const ajustes = defineCollection({
     redes_handle: z.string().default(''),
     redes_instagram: z.string().default('#'),
     redes_facebook: z.string().default('#'),
+    whatsapp_numero: z.string().default('50660658625'),
   }),
 });
 
@@ -80,9 +81,19 @@ const productos = defineCollection({
     imagen: z.string().default(''),
     badge: z.string().default(''),
     badge_estilo: z.enum(['dark', 'light']).default('dark'),
+    stock: z.number().int().min(0).default(0),
     colores: z.array(z.object({ color: z.string() })).default([]),
     fotos_por_color: z
       .array(z.object({ codigo: z.string(), imagen: z.string() }))
+      .default([]),
+    inventario: z
+      .array(
+        z.object({
+          codigo: z.string(),
+          talla: z.string(),
+          stock: z.number().int().min(0).default(0),
+        })
+      )
       .default([]),
     orden: z.number().int().default(0),
   }),

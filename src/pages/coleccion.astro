@@ -25,6 +25,19 @@ for (const color of colores) {
   };
 }
 
+
+function stockTotal(producto: (typeof productos)[number]) {
+  const inventario = producto.data.inventario ?? [];
+  return inventario.length
+    ? inventario.reduce((total, item) => total + item.stock, 0)
+    : producto.data.stock;
+}
+
+function stockLabel(producto: (typeof productos)[number]) {
+  const total = stockTotal(producto);
+  return total > 0 ? `${total} en stock` : 'Agotado';
+}
+
 const productsData = productos.map((producto) => ({
   id: producto.id,
   nombre: producto.data.nombre,
@@ -36,7 +49,9 @@ const productsData = productos.map((producto) => ({
       foto.imagen,
     ])
   ),
-  badge: producto.data.badge,
+  badge: stockLabel(producto),
+  stock: producto.data.stock,
+  inventario: producto.data.inventario,
   tallas: producto.data.tallas
     .split(',')
     .map((talla) => talla.trim())
@@ -53,6 +68,7 @@ const productsData = productos.map((producto) => ({
 ---
 
 <Layout
+  whatsapp={a.whatsapp_numero}
   title="Colección completa — WearOnOff"
   description="Explora todos los diseños de uniformes y conjuntos WearOnOff disponibles en stock."
 >
@@ -129,14 +145,14 @@ const productsData = productos.map((producto) => ({
               data-colores={producto.data.colores.map((color) => color.color.toLowerCase()).join(' ')}
             >
               <div class="wearonoff-product__media">
-                {producto.data.badge && (
+                {stockLabel(producto) && (
                   <span
                     class:list={[
                       'wearonoff-badge',
                       producto.data.badge_estilo === 'light' && 'wearonoff-badge--light',
                     ]}
                   >
-                    {producto.data.badge}
+                    {stockLabel(producto)}
                   </span>
                 )}
                 <img
@@ -220,6 +236,7 @@ const productsData = productos.map((producto) => ({
           <p class="wearonoff-modal__label">Color: <span id="wearonoff-modal-color-label"></span></p>
           <div class="wearonoff-modal__colors" id="wearonoff-modal-colors"></div>
         </div>
+        <p class="wearonoff-modal__stock" id="wearonoff-modal-stock"></p>
         <div class="wearonoff-modal__group">
           <p class="wearonoff-modal__label">Talla</p>
           <div class="wearonoff-modal__sizes" id="wearonoff-modal-sizes"></div>
@@ -230,9 +247,9 @@ const productsData = productos.map((producto) => ({
         </div>
         <p class="wearonoff-modal__error" id="wearonoff-modal-error" role="alert" hidden>Selecciona una talla para continuar.</p>
         <button class="wearonoff-btn wearonoff-btn--block wearonoff-modal__cta" id="wearonoff-modal-cta" type="button">
-          Solicitar cotización
+          Agregar al carrito
         </button>
-        <p class="wearonoff-modal__note">Te contactamos para confirmar disponibilidad y precio.</p>
+        <p class="wearonoff-modal__note">Agrega tus prendas y solicita la cotización por WhatsApp.</p>
       </div>
     </div>
   </div>
