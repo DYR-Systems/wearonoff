@@ -30,53 +30,53 @@ const productos = (await getCollection('productos')).sort(
   />
 
   <main>
-    <section class="figs-hero figs-hero--split">
-      <div class="figs-hero__content">
-        <p class="figs-hero__eyebrow">{a.hero_eyebrow}</p>
+    <section class="wearonoff-hero wearonoff-hero--split">
+      <div class="wearonoff-hero__content">
+        <p class="wearonoff-hero__eyebrow">{a.hero_eyebrow}</p>
         <h1>{a.hero_titulo}</h1>
-        <p class="figs-hero__subtitle">{a.hero_subtitulo}</p>
-        <div class="figs-hero__actions">
-          <a class="figs-btn" href={a.hero_cta_primario_url}>
+        <p class="wearonoff-hero__subtitle">{a.hero_subtitulo}</p>
+        <div class="wearonoff-hero__actions">
+          <a class="wearonoff-btn" href={a.hero_cta_primario_url}>
             {a.hero_cta_primario_texto}
           </a>
-          <a class="figs-btn figs-btn--outline" href={a.hero_cta_secundario_url}>
+          <a class="wearonoff-btn wearonoff-btn--outline" href={a.hero_cta_secundario_url}>
             {a.hero_cta_secundario_texto}
           </a>
         </div>
       </div>
-      <div class="figs-hero__media">
-        <img class="figs-hero__fg" src={a.hero_imagen} alt={a.hero_titulo} />
+      <div class="wearonoff-hero__media">
+        <img class="wearonoff-hero__fg" src={a.hero_imagen} alt={a.hero_titulo} />
       </div>
     </section>
 
-    <section class="figs-section" id="colores">
-      <div class="figs-container">
-        <div class="figs-section-head">
+    <section class="wearonoff-section" id="colores">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
           <h2>{a.colores_titulo}</h2>
           <p>{a.colores_subtitulo}</p>
         </div>
-        <div class="figs-colors">
+        <div class="wearonoff-colors">
           {colores.map((color) => (
-            <a class="figs-color" href="#productos">
-              <span class="figs-swatch" style={`--c:${color.data.hex}`}></span>
-              <span class="figs-color__label">{color.data.nombre}{color.data.codigo && <span class="figs-color__code"> ({color.data.codigo})</span>}</span>
+            <a class="wearonoff-color" href="#productos">
+              <span class="wearonoff-swatch" style={`--c:${color.data.hex}`}></span>
+              <span class="wearonoff-color__label">{color.data.nombre}{color.data.codigo && <span class="wearonoff-color__code"> ({color.data.codigo})</span>}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="figs-section figs-section--soft" id="mujeres">
-      <div class="figs-container">
-        <div class="figs-section-head">
+    <section class="wearonoff-section wearonoff-section--soft" id="mujeres">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
           <h2>{a.categorias_titulo}</h2>
           <p>{a.categorias_subtitulo}</p>
         </div>
-        <div class="figs-categories">
+        <div class="wearonoff-categories">
           {categorias.map((categoria) => (
-            <a class="figs-category" href={categoria.data.enlace}>
+            <a class="wearonoff-category" href={categoria.data.enlace}>
               <img src={categoria.data.imagen} alt={categoria.data.nombre} loading="lazy" />
-              <span class="figs-category__label">{categoria.data.nombre}</span>
+              <span class="wearonoff-category__label">{categoria.data.nombre}</span>
             </a>
           ))}
         </div>
@@ -85,21 +85,21 @@ const productos = (await getCollection('productos')).sort(
 
     <span id="hombres"></span>
 
-    <section class="figs-section" id="productos">
-      <div class="figs-container">
-        <div class="figs-section-head">
+    <section class="wearonoff-section" id="productos">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
           <h2>{a.productos_titulo}</h2>
           <p>{a.productos_subtitulo}</p>
         </div>
-        <div class="figs-products">
+        <div class="wearonoff-products">
           {productos.map((producto) => (
-            <article class="figs-product">
-              <div class="figs-product__media">
+            <article class="wearonoff-product">
+              <div class="wearonoff-product__media">
                 {producto.data.badge && (
                   <span
                     class:list={[
-                      'figs-badge',
-                      producto.data.badge_estilo === 'light' && 'figs-badge--light',
+                      'wearonoff-badge',
+                      producto.data.badge_estilo === 'light' && 'wearonoff-badge--light',
                     ]}
                   >
                     {producto.data.badge}
@@ -107,61 +107,61 @@ const productos = (await getCollection('productos')).sort(
                 )}
                 <img src={producto.data.imagen} alt={producto.data.nombre} loading="lazy" />
               </div>
-              <div class="figs-product__body">
-                <h3 class="figs-product__name">{producto.data.nombre}</h3>
-                <p class="figs-product__price">{producto.data.precio}</p>
+              <div class="wearonoff-product__body">
+                <h3 class="wearonoff-product__name">{producto.data.nombre}</h3>
+                <p class="wearonoff-product__price">{producto.data.precio}</p>
                 {producto.data.tallas && (
-                  <p class="figs-product__sizes">Tallas: {producto.data.tallas}</p>
+                  <p class="wearonoff-product__sizes">Tallas: {producto.data.tallas}</p>
                 )}
-                <div class="figs-product__colors">
+                <div class="wearonoff-product__colors">
                   {producto.data.colores.map((color) => (
-                    <span class="figs-product__dot" style={`--c:${color.color}`}></span>
+                    <span class="wearonoff-product__dot" style={`--c:${color.color}`}></span>
                   ))}
                 </div>
               </div>
             </article>
           ))}
         </div>
-        <div class="figs-products__more">
-          <a class="figs-btn figs-btn--outline" href={a.productos_cta_url}>
+        <div class="wearonoff-products__more">
+          <a class="wearonoff-btn wearonoff-btn--outline" href={a.productos_cta_url}>
             {a.productos_cta_texto}
           </a>
         </div>
       </div>
     </section>
 
-    <section class="figs-fabric" id="telas">
-      <div class="figs-fabric__media">
+    <section class="wearonoff-fabric" id="telas">
+      <div class="wearonoff-fabric__media">
         <img src={a.tela_imagen} alt={a.tela_titulo} loading="lazy" />
       </div>
-      <div class="figs-fabric__body">
-        <p class="figs-eyebrow">{a.tela_eyebrow}</p>
+      <div class="wearonoff-fabric__body">
+        <p class="wearonoff-eyebrow">{a.tela_eyebrow}</p>
         <h2>{a.tela_titulo}</h2>
         <p>{a.tela_descripcion}</p>
-        <ul class="figs-fabric__list">
+        <ul class="wearonoff-fabric__list">
           {a.tela_bullets.map((bullet) => (
             <li>{bullet.item}</li>
           ))}
         </ul>
-        <a class="figs-btn" href={a.tela_cta_url}>{a.tela_cta_texto}</a>
+        <a class="wearonoff-btn" href={a.tela_cta_url}>{a.tela_cta_texto}</a>
       </div>
     </section>
 
-    <section class="figs-team" id="equipo">
-      <div class="figs-team__media">
+    <section class="wearonoff-team" id="equipo">
+      <div class="wearonoff-team__media">
         <img src={a.equipo_imagen} alt={a.equipo_titulo} loading="lazy" />
       </div>
-      <div class="figs-team__content">
+      <div class="wearonoff-team__content">
         <h2>{a.equipo_titulo}</h2>
         <p>{a.equipo_descripcion}</p>
-        <a class="figs-btn figs-btn--light" href={a.equipo_cta_url}>{a.equipo_cta_texto}</a>
+        <a class="wearonoff-btn wearonoff-btn--light" href={a.equipo_cta_url}>{a.equipo_cta_texto}</a>
       </div>
     </section>
 
-    <section class="figs-social">
-      <div class="figs-container">
-        <p class="figs-social__handle">{a.redes_handle}</p>
-        <div class="figs-social__links">
+    <section class="wearonoff-social">
+      <div class="wearonoff-container">
+        <p class="wearonoff-social__handle">{a.redes_handle}</p>
+        <div class="wearonoff-social__links">
           <a href={a.redes_instagram}>Instagram</a>
           <a href={a.redes_tiktok}>TikTok</a>
           <a href={a.redes_youtube}>YouTube</a>

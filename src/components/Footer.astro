@@ -7,9 +7,9 @@ const { marca = 'WearOnOff' } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="figs-footer">
-  <div class="figs-container">
-    <div class="figs-footer__grid">
+<footer class="wearonoff-footer">
+  <div class="wearonoff-container">
+    <div class="wearonoff-footer__grid">
       <div>
         <h4>Obtén ayuda</h4>
         <ul>
@@ -46,13 +46,8 @@ const year = new Date().getFullYear();
         </ul>
       </div>
     </div>
-    <div class="figs-footer__bottom">
+    <div class="wearonoff-footer__bottom">
       <span>&copy; {year} {marca.toUpperCase()}. Todos los derechos reservados.</span>
-      <div class="figs-footer__legal">
-        <a href="#">Términos de uso</a>
-        <a href="#">Política de privacidad</a>
-        <span class="figs-footer__country">Costa Rica | es</span>
-      </div>
     </div>
   </div>
 </footer>

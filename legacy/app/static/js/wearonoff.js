@@ -1,7 +1,7 @@
 (function () {
-  var openBtn = document.querySelector("[data-figs-open]");
-  var closeBtn = document.querySelector("[data-figs-close]");
-  var drawer = document.querySelector("[data-figs-drawer]");
+  var openBtn = document.querySelector("[data-wearonoff-open]");
+  var closeBtn = document.querySelector("[data-wearonoff-close]");
+  var drawer = document.querySelector("[data-wearonoff-drawer]");
 
   if (!drawer) return;
 
