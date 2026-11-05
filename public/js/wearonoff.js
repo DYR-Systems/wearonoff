@@ -110,10 +110,7 @@
 
   function colorLabel(color) {
     if (!color) return "";
-    if (color.nombre) {
-      return color.nombre + (color.codigo ? " (" + color.codigo + ")" : "");
-    }
-    return color.codigo || color.hex || "";
+    return color.nombre || color.hex || "";
   }
 
   function colorPhoto(product, color) {

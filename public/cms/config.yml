@@ -61,11 +61,23 @@ collections:
           - { label: "Equipo: imagen", name: "equipo_imagen", widget: "image", choose_url: true }
           - { label: "Equipo: texto del botón", name: "equipo_cta_texto", widget: "string" }
           - { label: "Equipo: enlace del botón", name: "equipo_cta_url", widget: "string" }
+          - { label: "Historia: título", name: "historia_titulo", widget: "string" }
+          - { label: "Historia: texto", name: "historia_texto", widget: "text" }
+          - { label: "Preguntas: título", name: "faq_titulo", widget: "string" }
+          - label: "Preguntas frecuentes"
+            name: "faq_items"
+            widget: "list"
+            summary: "{{fields.pregunta}}"
+            fields:
+              - { label: "Pregunta", name: "pregunta", widget: "string" }
+              - { label: "Respuesta", name: "respuesta", widget: "text" }
+          - { label: "Estudiantes: título", name: "estudiantes_titulo", widget: "string" }
+          - { label: "Estudiantes: texto", name: "estudiantes_texto", widget: "text" }
+          - { label: "Estudiantes: texto del botón", name: "estudiantes_cta_texto", widget: "string" }
+          - { label: "Estudiantes: enlace del botón", name: "estudiantes_cta_url", widget: "string" }
           - { label: "Redes: texto", name: "redes_handle", widget: "string" }
           - { label: "Redes: Instagram", name: "redes_instagram", widget: "string" }
-          - { label: "Redes: TikTok", name: "redes_tiktok", widget: "string" }
-          - { label: "Redes: YouTube", name: "redes_youtube", widget: "string" }
-          - { label: "Redes: Pinterest", name: "redes_pinterest", widget: "string" }
+          - { label: "Redes: Facebook", name: "redes_facebook", widget: "string" }
 
   - name: "colores"
     label: "Colores"
@@ -81,7 +93,7 @@ collections:
     sortable_fields: ["orden", "nombre"]
     fields:
       - { label: "Nombre", name: "nombre", widget: "string" }
-      - { label: "Código", name: "codigo", widget: "string", required: false, hint: "Ejemplo: G2" }
+      - { label: "Código", name: "codigo", widget: "string", required: false, hint: "Uso interno para asociar fotos por color" }
       - { label: "Color", name: "hex", widget: "color" }
       - { label: "Orden", name: "orden", widget: "number", value_type: "int", default: 0 }
 
