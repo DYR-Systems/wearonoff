@@ -1,7 +1,7 @@
 (function () {
-  var openBtn = document.querySelector("[data-figs-open]");
-  var closeBtn = document.querySelector("[data-figs-close]");
-  var drawer = document.querySelector("[data-figs-drawer]");
+  var openBtn = document.querySelector("[data-wearonoff-open]");
+  var closeBtn = document.querySelector("[data-wearonoff-close]");
+  var drawer = document.querySelector("[data-wearonoff-drawer]");
 
   if (!drawer) return;
 
@@ -33,8 +33,8 @@
 })();
 
 (function () {
-  var dataEl = document.getElementById("figs-products-data");
-  var modal = document.getElementById("figs-product-modal");
+  var dataEl = document.getElementById("wearonoff-products-data");
+  var modal = document.getElementById("wearonoff-product-modal");
 
   if (!dataEl || !modal) return;
 
@@ -55,35 +55,35 @@
   });
 
   var cards = Array.prototype.slice.call(
-    document.querySelectorAll(".figs-product[data-product-id]")
+    document.querySelectorAll(".wearonoff-product[data-product-id]")
   );
   cards.forEach(function (card) {
-    var image = card.querySelector(".figs-product__media img");
+    var image = card.querySelector(".wearonoff-product__media img");
     if (image && !image.getAttribute("data-default-src")) {
       image.setAttribute("data-default-src", image.getAttribute("src"));
     }
   });
   var colorLinks = Array.prototype.slice.call(
-    document.querySelectorAll(".figs-color[data-color]")
+    document.querySelectorAll(".wearonoff-color[data-color]")
   );
-  var filterBar = document.getElementById("figs-color-filter");
-  var filterName = document.getElementById("figs-filter-name");
-  var filterSwatch = document.getElementById("figs-filter-swatch");
-  var filterClear = document.getElementById("figs-filter-clear");
+  var filterBar = document.getElementById("wearonoff-color-filter");
+  var filterName = document.getElementById("wearonoff-filter-name");
+  var filterSwatch = document.getElementById("wearonoff-filter-swatch");
+  var filterClear = document.getElementById("wearonoff-filter-clear");
 
-  var panel = modal.querySelector(".figs-modal__panel");
-  var closeButton = modal.querySelector(".figs-modal__close");
-  var modalImage = document.getElementById("figs-modal-img");
-  var modalBadge = document.getElementById("figs-modal-badge");
-  var modalTitle = document.getElementById("figs-modal-title");
-  var modalPrice = document.getElementById("figs-modal-price");
-  var modalColors = document.getElementById("figs-modal-colors");
-  var modalColorLabel = document.getElementById("figs-modal-color-label");
-  var modalSizes = document.getElementById("figs-modal-sizes");
-  var modalQty = document.getElementById("figs-modal-qty");
-  var modalError = document.getElementById("figs-modal-error");
-  var modalCta = document.getElementById("figs-modal-cta");
-  var modalPhotoNote = document.getElementById("figs-modal-photo-note");
+  var panel = modal.querySelector(".wearonoff-modal__panel");
+  var closeButton = modal.querySelector(".wearonoff-modal__close");
+  var modalImage = document.getElementById("wearonoff-modal-img");
+  var modalBadge = document.getElementById("wearonoff-modal-badge");
+  var modalTitle = document.getElementById("wearonoff-modal-title");
+  var modalPrice = document.getElementById("wearonoff-modal-price");
+  var modalColors = document.getElementById("wearonoff-modal-colors");
+  var modalColorLabel = document.getElementById("wearonoff-modal-color-label");
+  var modalSizes = document.getElementById("wearonoff-modal-sizes");
+  var modalQty = document.getElementById("wearonoff-modal-qty");
+  var modalError = document.getElementById("wearonoff-modal-error");
+  var modalCta = document.getElementById("wearonoff-modal-cta");
+  var modalPhotoNote = document.getElementById("wearonoff-modal-photo-note");
 
   if (
     !panel ||
@@ -110,10 +110,7 @@
 
   function colorLabel(color) {
     if (!color) return "";
-    if (color.nombre) {
-      return color.nombre + (color.codigo ? " (" + color.codigo + ")" : "");
-    }
-    return color.codigo || color.hex || "";
+    return color.nombre || color.hex || "";
   }
 
   function colorPhoto(product, color) {
@@ -139,7 +136,7 @@
       var matches = !activeColor || cardColors.indexOf(activeColor) !== -1;
       card.hidden = !matches;
 
-      var image = card.querySelector(".figs-product__media img");
+      var image = card.querySelector(".wearonoff-product__media img");
       if (!image) return;
       var defaultSrc =
         image.getAttribute("data-default-src") || image.getAttribute("src");
@@ -292,7 +289,7 @@
     product.colores.forEach(function (color) {
       var button = document.createElement("button");
       button.type = "button";
-      button.className = "figs-modal__color";
+      button.className = "wearonoff-modal__color";
       button.style.setProperty("--c", color.hex);
       button.title = colorLabel(color);
       button.setAttribute("aria-label", colorLabel(color));
@@ -308,7 +305,7 @@
     product.tallas.forEach(function (talla) {
       var button = document.createElement("button");
       button.type = "button";
-      button.className = "figs-modal__size";
+      button.className = "wearonoff-modal__size";
       button.textContent = talla;
       button.setAttribute("data-size", talla);
       button.setAttribute("aria-pressed", "false");
@@ -335,14 +332,14 @@
 
     lastFocused = document.activeElement;
     modal.hidden = false;
-    document.body.classList.add("figs-modal-open");
+    document.body.classList.add("wearonoff-modal-open");
     closeButton.focus();
   }
 
   function closeModal() {
     if (modal.hidden) return;
     modal.hidden = true;
-    document.body.classList.remove("figs-modal-open");
+    document.body.classList.remove("wearonoff-modal-open");
     if (lastFocused && typeof lastFocused.focus === "function") {
       lastFocused.focus();
     }
@@ -350,7 +347,7 @@
 
   Array.prototype.forEach.call(
     document.querySelectorAll(
-      ".figs-product__open, .figs-product__options, .figs-product__dot"
+      ".wearonoff-product__open, .wearonoff-product__options, .wearonoff-product__dot"
     ),
     function (button) {
       button.addEventListener("click", function (event) {
@@ -365,7 +362,7 @@
   );
 
   Array.prototype.forEach.call(
-    document.querySelectorAll(".figs-product[data-product-id]"),
+    document.querySelectorAll(".wearonoff-product[data-product-id]"),
     function (card) {
       card.addEventListener("click", function (event) {
         if (event.target.closest("button, a")) return;
@@ -410,7 +407,7 @@
 
     if (!selectedSize) {
       modalError.hidden = false;
-      var firstSize = modalSizes.querySelector(".figs-modal__size");
+      var firstSize = modalSizes.querySelector(".wearonoff-modal__size");
       if (firstSize) firstSize.focus();
       return;
     }

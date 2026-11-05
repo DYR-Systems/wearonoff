@@ -35,11 +35,19 @@ const ajustes = defineCollection({
     equipo_imagen: z.string().default(''),
     equipo_cta_texto: z.string().default('Comenzar'),
     equipo_cta_url: z.string().default('#'),
+    historia_titulo: z.string().default('Nuestra historia'),
+    historia_texto: z.string().default(''),
+    faq_titulo: z.string().default('Preguntas frecuentes'),
+    faq_items: z
+      .array(z.object({ pregunta: z.string(), respuesta: z.string() }))
+      .default([]),
+    estudiantes_titulo: z.string().default('Descuento para estudiantes'),
+    estudiantes_texto: z.string().default(''),
+    estudiantes_cta_texto: z.string().default('Solicitar mi cupón'),
+    estudiantes_cta_url: z.string().default('#'),
     redes_handle: z.string().default(''),
     redes_instagram: z.string().default('#'),
-    redes_tiktok: z.string().default('#'),
-    redes_youtube: z.string().default('#'),
-    redes_pinterest: z.string().default('#'),
+    redes_facebook: z.string().default('#'),
   }),
 });
 
