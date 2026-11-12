@@ -1,12 +1,19 @@
 :root {
-  --wearonoff-ink: #111111;
-  --wearonoff-muted: #6d6d6d;
-  --wearonoff-line: #e6e6e3;
-  --wearonoff-bg: #ffffff;
-  --wearonoff-soft: #f5f5f2;
+  --wearonoff-charcoal: #202522;
+  --wearonoff-ivory: #f1efe9;
+  --wearonoff-sage: #647568;
+  --wearonoff-stone: #b8b2a7;
+  --wearonoff-oxide: #784b48;
+  --wearonoff-ink: var(--wearonoff-charcoal);
+  --wearonoff-muted: #63675f;
+  --wearonoff-line: #d8d3c8;
+  --wearonoff-bg: var(--wearonoff-ivory);
+  --wearonoff-soft: #e9e5dc;
   --wearonoff-radius: 2px;
-  --wearonoff-font: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Arial, sans-serif;
+  --wearonoff-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  --wearonoff-font-display: "DM Sans", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 * {
@@ -43,19 +50,19 @@ body.wearonoff {
 .wearonoff h3,
 .wearonoff h4 {
   margin: 0;
-  line-height: 0.98;
+  font-family: var(--wearonoff-font-display);
+  line-height: 1.02;
   letter-spacing: -0.02em;
-  text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .wearonoff-eyebrow {
   margin: 0 0 0.9rem;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--wearonoff-muted);
+  color: var(--wearonoff-sage);
 }
 
 /* Buttons */
@@ -78,8 +85,8 @@ body.wearonoff {
 }
 
 .wearonoff-btn:hover {
-  background: #333;
-  border-color: #333;
+  background: var(--wearonoff-sage);
+  border-color: var(--wearonoff-sage);
 }
 
 .wearonoff-btn--outline {
@@ -146,7 +153,7 @@ body.wearonoff {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(241, 239, 233, 0.96);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--wearonoff-line);
 }
@@ -162,10 +169,11 @@ body.wearonoff {
 .wearonoff-header__nav {
   display: flex;
   align-items: center;
-  gap: 1.7rem;
-  font-size: 0.82rem;
+  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .wearonoff-header__nav a {
@@ -193,10 +201,14 @@ body.wearonoff {
 }
 
 .wearonoff-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   justify-self: center;
-  font-size: 1.55rem;
+  font-family: var(--wearonoff-font-display);
+  font-size: 1.32rem;
   font-weight: 900;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -206,11 +218,61 @@ body.wearonoff {
   width: auto;
 }
 
+.wearonoff-logo .wearonoff-logo__mark {
+  height: 30px;
+  width: auto;
+}
+
 .wearonoff-header__actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 1.05rem;
+}
+
+.wearonoff-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wearonoff-lang__btn {
+  padding: 0.1rem 0.15rem;
+  border: 0;
+  background: none;
+  color: var(--wearonoff-muted);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+
+.wearonoff-lang__btn:hover,
+.wearonoff-lang__btn.is-active {
+  color: var(--wearonoff-ink);
+}
+
+.wearonoff-lang__sep {
+  color: var(--wearonoff-stone);
+}
+
+.wearonoff-drawer__lang {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--wearonoff-line);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wearonoff-muted);
 }
 
 .wearonoff-icon-btn {
@@ -266,7 +328,7 @@ body.wearonoff {
   place-items: center;
   min-height: clamp(540px, 82vh, 860px);
   overflow: hidden;
-  background: #222;
+  background: var(--wearonoff-charcoal);
   color: #fff;
   text-align: center;
 }
@@ -315,6 +377,7 @@ body.wearonoff {
   font-size: clamp(2.8rem, 8vw, 6.4rem);
   line-height: 0.9;
   letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .wearonoff-hero__subtitle {
@@ -361,7 +424,7 @@ body.wearonoff {
 
 .wearonoff-hero--split .wearonoff-hero__subtitle {
   max-width: 440px;
-  color: #4a4a4a;
+  color: var(--wearonoff-muted);
 }
 
 .wearonoff-hero--split .wearonoff-hero__actions {
@@ -626,7 +689,7 @@ body.wearonoff {
 .wearonoff-fabric__body p {
   margin: 1.2rem 0 0;
   max-width: 440px;
-  color: #4a4a4a;
+  color: var(--wearonoff-muted);
 }
 
 .wearonoff-fabric__body .wearonoff-btn {
@@ -667,7 +730,7 @@ body.wearonoff {
   place-items: center;
   min-height: 480px;
   overflow: hidden;
-  background: #222;
+  background: var(--wearonoff-charcoal);
   color: #fff;
   text-align: center;
 }
@@ -792,7 +855,7 @@ body.wearonoff {
 
 /* Footer */
 .wearonoff-footer {
-  background: #f2f2ef;
+  background: var(--wearonoff-soft);
   color: var(--wearonoff-ink);
   padding: clamp(2.8rem, 5vw, 4.5rem) 0 2rem;
 }
@@ -841,12 +904,12 @@ body.wearonoff {
   gap: 1rem;
   margin-top: 3rem;
   padding-top: 1.6rem;
-  border-top: 1px solid #d9d9d4;
+  border-top: 1px solid var(--wearonoff-line);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8a8a86;
+  color: var(--wearonoff-muted);
 }
 
 /* Utility */
@@ -864,19 +927,22 @@ body.wearonoff {
 /* Responsive */
 @media (max-width: 1040px) {
   .wearonoff-header__nav {
-    gap: 1.2rem;
-    font-size: 0.78rem;
+    gap: 1rem;
+    font-size: 0.66rem;
   }
   .wearonoff-products {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1024px) {
   .wearonoff-header__inner {
     grid-template-columns: auto 1fr auto;
   }
   .wearonoff-header__nav {
+    display: none;
+  }
+  .wearonoff-lang--header {
     display: none;
   }
   .wearonoff-menu-toggle {
@@ -925,7 +991,7 @@ body.wearonoff {
     grid-template-columns: 1fr;
     aspect-ratio: 1154 / 912;
     min-height: 0;
-    background: #222;
+    background: var(--wearonoff-charcoal);
     color: #fff;
     text-align: center;
   }

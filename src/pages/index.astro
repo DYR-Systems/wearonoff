@@ -98,6 +98,23 @@ const productsData = productos.map((producto) => ({
       </div>
     </section>
 
+    <section class="wearonoff-section wearonoff-section--soft" id="mujeres">
+      <div class="wearonoff-container">
+        <div class="wearonoff-section-head">
+          <h2>{a.categorias_titulo}</h2>
+          <p>{a.categorias_subtitulo}</p>
+        </div>
+        <div class="wearonoff-categories">
+          {categorias.map((categoria) => (
+            <a class="wearonoff-category" href={categoria.data.enlace}>
+              <img src={categoria.data.imagen} alt={categoria.data.nombre} loading="lazy" />
+              <span class="wearonoff-category__label">{categoria.data.nombre}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <section class="wearonoff-section" id="colores">
       <div class="wearonoff-container">
         <div class="wearonoff-section-head">
@@ -115,23 +132,6 @@ const productsData = productos.map((producto) => ({
             >
               <span class="wearonoff-swatch" style={`--c:${color.data.hex}`}></span>
               <span class="wearonoff-color__label">{color.data.nombre}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section class="wearonoff-section wearonoff-section--soft" id="mujeres">
-      <div class="wearonoff-container">
-        <div class="wearonoff-section-head">
-          <h2>{a.categorias_titulo}</h2>
-          <p>{a.categorias_subtitulo}</p>
-        </div>
-        <div class="wearonoff-categories">
-          {categorias.map((categoria) => (
-            <a class="wearonoff-category" href={categoria.data.enlace}>
-              <img src={categoria.data.imagen} alt={categoria.data.nombre} loading="lazy" />
-              <span class="wearonoff-category__label">{categoria.data.nombre}</span>
             </a>
           ))}
         </div>
@@ -272,7 +272,7 @@ const productsData = productos.map((producto) => ({
           <p>{a.estudiantes_texto}</p>
         </div>
         <div class="wearonoff-section-cta">
-          <a class="wearonoff-btn" href={a.estudiantes_cta_url}>{a.estudiantes_cta_texto}</a>
+          <a class="wearonoff-btn" href={a.estudiantes_cta_url} target="_blank" rel="noopener">{a.estudiantes_cta_texto}</a>
         </div>
       </div>
     </section>
@@ -284,7 +284,7 @@ const productsData = productos.map((producto) => ({
       <div class="wearonoff-team__content">
         <h2>{a.equipo_titulo}</h2>
         <p>{a.equipo_descripcion}</p>
-        <a class="wearonoff-btn wearonoff-btn--light" href={a.equipo_cta_url}>{a.equipo_cta_texto}</a>
+        <a class="wearonoff-btn wearonoff-btn--light" href={a.equipo_cta_url} target="_blank" rel="noopener">{a.equipo_cta_texto}</a>
       </div>
     </section>
 

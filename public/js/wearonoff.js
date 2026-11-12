@@ -1,3 +1,15 @@
+function wearonoffLocalize(root) {
+  if (!root || !window.WearOnOffI18n) return;
+  window.WearOnOffI18n.translate(root);
+}
+
+function wearonoffT(text, vars) {
+  if (window.WearOnOffI18n && window.WearOnOffI18n.t) {
+    return window.WearOnOffI18n.t(text, vars);
+  }
+  return text;
+}
+
 (function () {
   var openBtn = document.querySelector("[data-wearonoff-open]");
   var closeBtn = document.querySelector("[data-wearonoff-close]");
@@ -173,6 +185,7 @@
       } else {
         filterBar.hidden = true;
       }
+      wearonoffLocalize(filterBar);
     }
 
     var url = new URL(window.location.href);
@@ -241,6 +254,8 @@
       }
       updateStock();
     }
+
+    wearonoffLocalize(modal);
   }
 
   function variantStock(product, color, size) {
@@ -305,6 +320,7 @@
         ? variantStock(currentProduct, color, selectedSize) <= 0
         : total <= 0
     );
+    wearonoffLocalize(modal);
   }
 
   function updateSize() {
@@ -396,6 +412,7 @@
     modalError.hidden = true;
     updateColor();
     updateSize();
+    wearonoffLocalize(modal);
 
     lastFocused = document.activeElement;
     modal.hidden = false;
@@ -475,6 +492,7 @@
     if (!selectedSize) {
       modalError.textContent = "Selecciona una talla para continuar.";
       modalError.hidden = false;
+      wearonoffLocalize(modalError);
       var firstSize = modalSizes.querySelector(".wearonoff-modal__size");
       if (firstSize) firstSize.focus();
       return;
@@ -499,6 +517,7 @@
       modalError.textContent =
         (result && result.message) || "No se pudo agregar al carrito.";
       modalError.hidden = false;
+      wearonoffLocalize(modalError);
       return;
     }
 
@@ -676,6 +695,7 @@
           "aria-label",
           count > 0 ? "Abrir carrito, " + count + " artículo(s)" : "Abrir carrito"
         );
+        wearonoffLocalize(element);
       }
     );
   }
@@ -686,23 +706,20 @@
       ""
     );
     var lines = items.map(function (item, index) {
-      return (
-        index +
-        1 +
-        ". " +
-        item.nombre +
-        " — Color: " +
-        item.colorNombre +
-        " — Talla: " +
-        item.size +
-        " — Cantidad: " +
-        item.qty
+      return wearonoffT(
+        "{index}. {name} — Color: {color} — Talla: {size} — Cantidad: {qty}",
+        {
+          index: index + 1,
+          name: wearonoffT(item.nombre),
+          color: wearonoffT(item.colorNombre),
+          size: item.size,
+          qty: item.qty,
+        }
       );
     });
-    var message =
-      "Hola, quiero cotizar:\n\n" +
-      lines.join("\n") +
-      "\n\nGracias.";
+    var message = wearonoffT("Hola, quiero cotizar:\n\n{lines}\n\nGracias.", {
+      lines: lines.join("\n"),
+    });
     return "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
   }
 
@@ -787,6 +804,7 @@
     whatsappEl.setAttribute("aria-disabled", count > 0 ? "false" : "true");
     whatsappEl.classList.toggle("is-disabled", count === 0);
     updateHeader();
+    wearonoffLocalize(itemsEl);
   }
 
   function add(productId, colorHex, size, quantity) {
@@ -927,6 +945,10 @@
   window.addEventListener("storage", function (event) {
     if (event.key !== KEY) return;
     items = load();
+    render();
+  });
+
+  window.addEventListener("wearonoff:langchange", function () {
     render();
   });
 
