@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'WearOnOff — Uniformes médicos con estilo',
-  description = 'Uniformes médicos con estilo. Comodidad, materiales de calidad y diseño para quienes trabajan sin descanso.',
+  title = 'WEARONOFF — Indumentaria médica de lujo',
+  description = 'Indumentaria médica de diseño editorial para profesionales de la salud. Comodidad, calidad y estilo para cada turno.',
   whatsapp = '50660658625',
 } = Astro.props;
 ---
@@ -22,11 +22,19 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#202522" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="wearonoff">
     <slot />
     <CartDrawer whatsapp={whatsapp} />
+    <script src="/js/i18n.js" defer></script>
     <script src="/js/wearonoff.js" defer></script>
   </body>
 </html>
