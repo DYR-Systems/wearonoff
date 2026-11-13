@@ -79,6 +79,13 @@ collections:
           - { label: "Redes: Instagram", name: "redes_instagram", widget: "string" }
           - { label: "Redes: Facebook", name: "redes_facebook", widget: "string" }
           - { label: "WhatsApp", name: "whatsapp_numero", widget: "string", hint: "Solo dígitos con código de país. Ej: 50660658625" }
+          - label: "Catálogo (PDF)"
+            name: "catalogo_pdf"
+            widget: "file"
+            required: false
+            media_folder: "public/catalogos"
+            public_folder: "/catalogos"
+            hint: "Sube el PDF del catálogo. Esta ruta se puede compartir como enlace; no se muestra en la página."
 
   - name: "colores"
     label: "Colores"

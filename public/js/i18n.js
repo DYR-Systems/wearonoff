@@ -31,7 +31,7 @@
     "Prendas profesionales, diseño contemporáneo, comodidad y funcionalidad, para acompañar a quienes dedican su trabajo a cuidar de los demás.":
       "Professional garments with contemporary design, comfort and functionality, to accompany those who dedicate their work to caring for others.",
     "Comprar mujer": "Shop women",
-    "Comprar hombre": "Shop men",
+    "Hombre · Muy pronto": "Men · Coming soon",
     "Colores exclusivos": "Signature Colors",
     "Colores disponibles en stock para entrega inmediata.":
       "Colors available in stock for immediate delivery.",
