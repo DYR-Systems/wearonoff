@@ -88,9 +88,13 @@ const productsData = productos.map((producto) => ({
           <a class="wearonoff-btn" href={a.hero_cta_primario_url}>
             {a.hero_cta_primario_texto}
           </a>
-          <a class="wearonoff-btn wearonoff-btn--outline" href={a.hero_cta_secundario_url}>
+          <span
+            class="wearonoff-btn wearonoff-btn--outline is-disabled"
+            aria-disabled="true"
+            title={a.hero_cta_secundario_texto}
+          >
             {a.hero_cta_secundario_texto}
-          </a>
+          </span>
         </div>
       </div>
       <div class="wearonoff-hero__media">

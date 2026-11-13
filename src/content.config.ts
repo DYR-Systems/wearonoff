@@ -49,6 +49,7 @@ const ajustes = defineCollection({
     redes_instagram: z.string().default('#'),
     redes_facebook: z.string().default('#'),
     whatsapp_numero: z.string().default('50660658625'),
+    catalogo_pdf: z.string().default(''),
   }),
 });
 
